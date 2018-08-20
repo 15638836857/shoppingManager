@@ -1,0 +1,406 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.palmble.sp.manger.dao.OrderInfoMapper">
+
+	<resultMap id="BaseResultMap" type="com.palmble.sp.manger.model.OrderInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+		<result column="integral" property="integral" jdbcType="INTEGER" />
+		<result column="payment_method" property="paymentMethod"
+			jdbcType="INTEGER" />
+		<result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+		<result column="user_notes" property="userNotes" jdbcType="VARCHAR" />
+		<result column="total_amount" property="totalAmount" jdbcType="DOUBLE" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="user_name" property="memberNumber" jdbcType="INTEGER" />
+		<result column="admin_notes" property="adminNotes" jdbcType="VARCHAR" />
+		<result column="express_no" property="expressNo" jdbcType="VARCHAR"/>
+		<association property="consignee" javaType="com.palmble.sp.manger.model.Consignee">
+			<result column="name" property="name" jdbcType="VARCHAR" />
+			<result column="phone" property="phone" jdbcType="VARCHAR" />
+			<result column="province" property="province" jdbcType="VARCHAR" />
+			<result column="city" property="city" jdbcType="VARCHAR" />
+			<result column="address_info" property="addressInfo" jdbcType="VARCHAR" />
+		</association>
+		<association property="afterSale"  select="findAfterSale" column="order_number">
+		</association>
+		<collection property="zsGoods" javaType="java.util.List"
+			ofType="com.palmble.sp.manger.model.ZsGoods" column="id" select="findGoods">
+			<id column="id" property="id" jdbcType="INTEGER" />
+			<result column="goodsNo" property="goodsNo" jdbcType="VARCHAR" />
+			<result column="goodsName" property="goodsName" jdbcType="VARCHAR" />
+			<result column="goodsCoverImg" property="goodsCoverImg"
+				jdbcType="VARCHAR" />
+			<result column="goodsCoverThums" property="goodsCoverThums"
+				jdbcType="VARCHAR" />
+			<result column="marketPrice" property="marketPrice" jdbcType="DECIMAL" />
+			<result column="shopPrice" property="shopPrice" jdbcType="DECIMAL" />
+			<result column="goodsStock" property="goodsStock" jdbcType="INTEGER" />
+			<result column="saleCount" property="saleCount" jdbcType="INTEGER" />
+			<result column="goodsSpec" property="goodsSpec" jdbcType="VARCHAR" />
+			<result column="isSale" property="isSale" jdbcType="BIT" />
+			<result column="isAdminRecom" property="isAdminRecom"
+				jdbcType="VARCHAR" />
+			<result column="goodsDesc" property="goodsDesc" jdbcType="VARCHAR" />
+			<result column="saleTime" property="saleTime" jdbcType="TIMESTAMP" />
+			<result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+			<result column="goodsPhotoAlbumId" property="goodsPhotoAlbumId"
+				jdbcType="INTEGER" />
+		</collection>
+	</resultMap>
+
+	<resultMap id="simpleResult" type="com.palmble.sp.manger.model.OrderInfo">
+		<id column="id" property="id" jdbcType="INTEGER" />
+		<result column="order_number" property="orderNumber" jdbcType="VARCHAR" />
+		<result column="integral" property="integral" jdbcType="INTEGER" />
+		<result column="admin_notes" property="adminNotes" jdbcType="VARCHAR"/>
+		<result column="payment_method" property="paymentMethod"
+			jdbcType="INTEGER" />
+		<result column="order_status" property="orderStatus" jdbcType="INTEGER" />
+		<result column="user_notes" property="userNotes" jdbcType="VARCHAR" />
+		<result column="total_amount" property="totalAmount" jdbcType="DOUBLE" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="user_id" property="userId" jdbcType="INTEGER" />
+		<result column="express_no" property="expressNo" jdbcType="VARCHAR"/>
+	</resultMap>
+
+<resultMap id="AfterSaleResultMap" type="com.palmble.sp.manger.model.AfterSale">
+  <id column = "id" property = "id" jdbcType = "INTEGER"/>
+  <result column = "type" property = "type" jdbcType = "INTEGER"/>
+  <result column = "reason" property = "reason" jdbcType = "VARCHAR"/>
+  <result column = "mode" property = "mode" jdbcType = "INTEGER"/>
+  <result column = "order_no" property = "orderNo" jdbcType = "VARCHAR"/>
+  <result column = "create_time" property = "createTime" jdbcType = "TIMESTAMP"/>
+  <result column = "update_time" property = "updateTime" jdbcType = "TIMESTAMP"/>
+  </resultMap>
+
+	<!-- 根据订单查询商品信息 -->
+	<select id="findGoods" parameterType="string"
+		resultType="com.palmble.sp.manger.model.ZsGoods">
+		select
+		a.goodsNo, a.goodsName, a.goodsCoverImg,
+		a.goodsCoverThums,
+		a.marketPrice, a.shopPrice, a.goodsStock,
+		a.saleCount, a.goodsSpec, a.isSale, a.isAdminRecom, a.goodsDesc,
+		a.saleTime,
+		a.createTime, 
+		a.goodsPhotoAlbumId,
+		a.goodsCateId,
+		a.id,
+		b.number
+		from
+		zs_goods a right join harvested_goods b
+		on a.id=b.goods_id
+		where
+		b.order_id=#{id}
+	</select>
+
+ <select id="findAfterSale" parameterType="string" resultMap="AfterSaleResultMap">
+    select
+    	id,
+    	type,
+   	    reason,
+   		mode,
+   		order_no,
+    	date_format(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(update_time,'%Y-%m-%d %H:%i:%s') as update_time,
+		imgs
+    from after_sale
+    where order_no = #{order_number}
+  </select>
+	<delete id="deleteById" parameterType="java.lang.Integer">
+		DELETE a,b FROM order_info
+		a JOIN harvested_goods b ON a.id=b.order_id
+		where a.id = #{id}
+	</delete>
+
+	<update id="updateById" parameterType="com.palmble.sp.manger.model.OrderInfo">
+		update order_info
+		<set>
+			<if test="id != null">
+				id = #{id},
+			</if>
+			<if test="orderNumber != null">
+				order_number = #{orderNumber},
+			</if>
+			<if test="integral != null">
+				integral = #{integral},
+			</if>
+			<if test="paymentMethod != null">
+				payment_method = #{paymentMethod},
+			</if>
+			<if test="orderStatus != null">
+				order_status = #{orderStatus},
+			</if>
+			<if test="userNotes != null">
+				user_notes = #{userNotes},
+			</if>
+			<if test="totalAmount != null">
+				total_amount = #{totalAmount},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime},
+			</if>
+			<if test="userId!=null">
+				user_id=#{userId},
+			</if>
+			<if test="adminNotes!=null">
+				admin_notes=#{adminNotes},
+			</if>
+			<if test="expressNo!=null">
+				express_no=#{expressNo},
+			</if>
+		</set>
+		where id = #{id}
+	</update>
+
+	<update id="updateFullyById" parameterType="com.palmble.sp.manger.model.OrderInfo">
+		update order_info
+		set
+		order_number=#{orderNumber,jdbcType=VARCHAR},
+		integral=#{integral,jdbcType=INTEGER},
+		payment_method=#{paymentMethod,jdbcType=INTEGER},
+		order_status=#{orderStatus,jdbcType=INTEGER},
+		user_notes=#{userNotes,jdbcType=VARCHAR},
+		total_amount=#{totalAmount,jdbcType=DOUBLE},
+		create_time=#{createTime,jdbcType=TIMESTAMP},
+		update_time=#{updateTime,jdbcType=TIMESTAMP},
+		user_id=#{userId,jdbcType=INTEGER},
+		admin_notes=#{adminNotes,jdbcType=VARCHAR},
+		express_no=#{expressNo,jdbcType=VARCHAR}
+		where id = #{id}
+	</update>
+
+	<sql id="baseColumns">
+		a.id as id,
+		a.order_number as order_number,
+		a.integral as integral,
+		a.payment_method as payment_method,
+		a.order_status as order_status,
+		a.user_notes as user_notes,
+		a.admin_notes as admin_notes,
+		a.total_amount as total_amount,
+		date_format(a.create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(a.update_time,'%Y-%m-%d %H:%i:%s') as update_time,
+		a.user_id as user_id,
+		a.express_no as express_no,
+		b.name as name,
+		b.phone as phone,
+		b.province as province,
+		b.city as city,
+		b.address_info as address_info
+	</sql>
+	<sql id="joinUserColumns">
+		a.id as id,
+		a.order_number as order_number,
+		a.integral as integral,
+		a.payment_method as payment_method,
+		a.order_status as order_status,
+		a.user_notes as user_notes,
+		a.admin_notes as admin_notes,
+		a.total_amount as total_amount,
+		a.express_no as express_no,
+		date_format(a.create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(a.update_time,'%Y-%m-%d %H:%i:%s') as update_time,
+		a.user_id as user_id,
+		b.name as name,
+		b.phone as phone,
+		b.province as province,
+		b.city as city,
+		b.address_info as address_info,
+		c.user_name
+	</sql>
+
+	<sql id="queryParams">
+		<where>
+		1=1
+			<if test="orderNumber != null and orderNumber != ''">
+				and a.order_number=#{orderNumber}
+			</if>
+			<if test="integral != null and integral != ''">
+				and a.integral=#{integral}
+			</if>
+			<if test="paymentMethod != null and paymentMethod != ''">
+				and a.payment_method=#{paymentMethod}
+			</if>
+			<if test="orderStatus != null and orderStatus != ''">
+				and a.order_status=#{orderStatus}
+			</if>
+			<if test="userNotes != null and userNotes != ''">
+				and a.user_notes=#{userNotes}
+			</if>
+			<if test="userId != null and userId != ''">
+				and a.user_id=#{userId}
+			</if>
+			<if test="totalAmount != null and totalAmount != ''">
+				and a.total_amount=#{totalAmount}
+			</if>
+			<if test="createTime != null and createTime != ''">
+				and a.create_time=#{createTime}
+			</if>
+			<if test="updateTime != null and updateTime != ''">
+				and a.update_time=#{updateTime}
+			</if>
+			<if test="adminNotes != null and adminNotes != ''">
+				and a.admin_notes=#{adminNotes}
+			</if>
+			<if test="adminNotes != null and adminNotes != ''">
+				and a.express_no=#{expressNo}
+			</if>
+		</where>
+	</sql>
+
+	<select id="getById" parameterType="java.lang.Integer"
+		resultMap="BaseResultMap">
+		select
+		<include refid="joinUserColumns" />
+		from order_info a join consignee b on a.consignee_id=b.id join member_user c
+		on a.user_id=c.id
+		where a.id =
+		#{id}
+	</select>
+	
+	<select id="getSimpleResultById" parameterType="java.lang.Integer"
+		resultMap="simpleResult">
+		select
+		<include refid="baseColumns" />
+		from order_info a join consignee b on a.consignee_id=b.id
+		where a.id =
+		#{id}
+	</select>
+
+	<select id="find" parameterType="java.util.Map" resultMap="BaseResultMap">
+		select
+		<include refid="joinUserColumns" />
+		from order_info a join consignee b on a.consignee_id=b.id join member_user c
+		on a.user_id=c.id
+		<include refid="queryParams" />
+		<if test="sidx != null and sord != null">
+			order by ${sidx} ${sord}
+		</if>
+		<if test="startRow != null and pageSize != null">
+			limit #{startRow},#{pageSize}
+		</if>
+	</select>
+
+	<select id="findSimpleResult" parameterType="java.util.Map"
+		resultMap="simpleResult">
+		select
+		id as id,
+		order_number as order_number,
+		integral as integral,
+		payment_method as payment_method,
+		order_status as order_status,
+		user_notes as user_notes,
+		total_amount as total_amount,
+		express_no,
+		date_format(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+		date_format(update_time,'%Y-%m-%d %H:%i:%s') as update_time,
+		user_id as user_id,
+		admin_notes
+		from order_info 
+<!-- 		a join consignee b on a.consignee_id=b.id -->
+		<include refid="queryParams" />
+		    <if test="sidx != null and sord != null" >
+     		 order by ${sidx} ${sord}
+ 		   </if>
+		<if test="startRow != null and pageSize != null">
+			limit #{startRow},#{pageSize}
+		</if>
+	</select>
+	
+	<select id="findSimpleResultToMap" parameterType="java.util.Map"
+		resultType="map">
+		select
+		id as id,
+		order_number as orderNumber,
+		integral as integral,
+		payment_method as paymentMethod,
+		order_status as orderStatus,
+		user_notes as userNotes,
+		total_amount as totalAmount,
+		express_no,
+		date_format(create_time,'%Y-%m-%d %H:%i:%s') as createTime,
+		date_format(update_time,'%Y-%m-%d %H:%i:%s') as updateTime,
+		user_id as userId,
+		admin_notes
+		from order_info 
+		<include refid="queryParams" />
+		<if test="sidx != null and sord != null">
+			order by ${sidx} ${sord}
+		</if>
+		<if test="startRow != null and pageSize != null">
+			limit #{startRow},#{pageSize}
+		</if>
+	</select>
+
+	<select id="count" parameterType="java.util.Map" resultType="java.lang.Integer">
+		select count(*) from order_info
+		<include refid="queryParams" />
+	</select>
+	
+	  <sql id="fuzzyParams">
+    <where >
+    	1=1
+      <if test="orderNumber != null and orderNumber != ''">
+      and a.order_number like concat(concat('%',#{orderNumber}),'%')  
+      </if>
+      <if test="integral != null and integral != ''" >
+      and  a.integral like concat(concat('%',#{integral}),'%')  
+      </if>
+      <if test="paymentMethod != null and paymentMethod != ''" >
+      and  a.payment_method like concat(concat('%',#{paymentMethod}),'%')  
+      </if>
+      <if test="orderStatus != null and orderStatus != ''" >
+      and  a.order_status like concat(concat('%',#{orderStatus}),'%')  
+      </if>
+      <if test="userNotes != null and userNotes != ''" >
+      and  a.user_notes like concat(concat('%',#{userNotes}),'%')  
+      </if>
+      <if test="totalAmount != null and totalAmount != ''" >
+      and  a.total_amount like concat(concat('%',#{totalAmount}),'%')  
+      </if>
+      <if test="expressNo != null and expressNo != ''" >
+      and  a.express_no like concat(concat('%',#{expressNo}),'%')  
+      </if>
+      <if test="startTime != null and startTime != ''" >
+      <![CDATA[ and  a.create_time  > #{startTime}]]>
+      </if>
+      <if test="endTime != null and endTime != ''" >
+      <![CDATA[ and  a.create_time  < #{endTime}]]>
+      </if>
+      <if test="updateTime != null and updateTime != ''" >
+      and  a.update_time like concat(concat('%',#{updateTime}),'%')  
+      </if>
+      <if test="consigneeId != null and consigneeId != ''" >
+      and  a.consignee_id like concat(concat('%',#{consigneeId}),'%')  
+      </if>
+       <if test="adminNotes != null and adminNotes != ''" >
+      and  a.admin_notes like concat(concat('%',#{adminNotes}),'%')  
+      </if>
+    </where >
+  </sql>
+  
+  <select id="fuzzyQuery" parameterType="map" resultMap="simpleResult" >
+  	select 
+  		<include refid="baseColumns" />
+  	from order_info a join consignee b on a.consignee_id=b.id
+    <include refid="fuzzyParams" />
+  </select>
+  <select id="fuzzyQueryAllResult" parameterType="map" resultMap="BaseResultMap" >
+  	select 
+  		<include refid="baseColumns" />
+  	from order_info a join consignee b on a.consignee_id=b.id
+    <include refid="fuzzyParams" />
+        <if test="sidx != null and sord != null" >
+      order by ${sidx} ${sord}
+    </if>
+  </select>
+</mapper>

@@ -1,0 +1,125 @@
+package com.palmble.sp.manger.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import javax.annotation.Resource;
+
+import org.springframework.stereotype.Service;
+
+import com.github.pagehelper.PageInfo;
+import com.palmble.sp.manger.dao.BaseMenuMapper;
+import com.palmble.sp.manger.model.BaseMenu;
+import com.palmble.sp.manger.service.BaseMenuService;
+import com.palmble.sp.manger.utils.ResultInfo;
+
+@Service(value="baseMenuServiceImpl")
+public class BaseMenuServiceImpl implements BaseMenuService {
+	@Resource
+	private BaseMenuMapper baseMenuMapper;
+	/**
+	 * 获取菜单列表实现方法
+	 * @return 
+	 * @return 
+	 */
+	public PageInfo<BaseMenu> getMenuList(Map<String, String> map) {
+		List<BaseMenu> list = baseMenuMapper.byAllMenuList(map);
+		PageInfo<BaseMenu> pageSource=new PageInfo<>(list);
+		return pageSource;
+	}
+	public BaseMenu getMenuInfo(Integer menuId) {
+		return baseMenuMapper.selectByPrimaryKey(menuId);
+	}
+	@Override
+	public ResultInfo deleteMenu(Integer menuId) {
+		 int delete = baseMenuMapper.deleteByPrimaryKey(menuId);
+		 if(delete>0) {//删除成功
+			 return new ResultInfo(1, "删除成功");
+		 }else {
+			 return new ResultInfo(-1, "删除失败");
+		 }
+	}
+	@Override
+	public ResultInfo forBiddenMenu(Integer menuId,Integer isDisplay) {
+		BaseMenu menu = baseMenuMapper.selectByPrimaryKey(menuId);
+		if(menu==null) {
+			return new ResultInfo(-1, "获取菜单信息失败");
+		}
+		if(isDisplay!=null) {
+			menu.setIsDisplay(isDisplay);
+		}else {
+			return new ResultInfo(-1, "操作失败");
+		}
+		int menuFlag = baseMenuMapper.updateByPrimaryKey(menu);
+		if(menuFlag>0) {
+			return new ResultInfo(1, "操作成功");
+		 }else {
+			return new ResultInfo(-1, "操作失败");
+		}
+	}
+	@Override
+	public ResultInfo noAvailMenu(Integer menuId,Integer idEffective) {
+		BaseMenu menu = this.getMenuInfo(menuId);
+		if(menu==null) {
+			return new ResultInfo(-1, "获取菜单信息失败");
+		}
+		if(idEffective!=null) {
+			menu.setIdEffective(idEffective);
+		}else {
+			return new ResultInfo(-1, "操作失败");
+		}
+		int menuFlag = baseMenuMapper.updateByPrimaryKey(menu);
+		if(menuFlag>0) {
+			return new ResultInfo(1, "操作成功");
+		}else {
+			return new ResultInfo(-1, "操作失败");
+		}
+	}
+	@SuppressWarnings("unlikely-arg-type")
+	@Override
+	public ResultInfo addMenu(BaseMenu baseMenu) {
+		int operateCount=0;//初始化添加成功/修改成功数据条数
+		if(baseMenu.getId()!=null&&!baseMenu.getId().equals("")) {
+			operateCount = baseMenuMapper.updateByPrimaryKey(baseMenu);
+		}else {//添加数据
+			BaseMenu menu = baseMenuMapper.selectBySelective(baseMenu);//验证菜单是否已存在
+			if(menu!=null) {
+				return new ResultInfo(-1, "菜单名称已存在");
+			}else {
+				operateCount = baseMenuMapper.insert(baseMenu);
+			}
+		}
+		if(operateCount>0) {
+			return new ResultInfo(1, "操作成功");
+		}else {
+			return new ResultInfo(-1, "操作失败");
+		}
+	}
+	@Override
+	public List<BaseMenu> getAll() {
+		return baseMenuMapper.getAll(null,null);
+	}
+	@Override
+	public BaseMenu getMenuInfoByselect(BaseMenu baseMenu) {
+		return baseMenuMapper.selectBySelective(baseMenu);
+		
+	}
+	@Override
+	public ResultInfo changeMenuSort(Integer id, Integer sort) {
+		BaseMenu menu = baseMenuMapper.selectByPrimaryKey(id);
+		if(menu==null) {
+			return new ResultInfo(-1, "获取菜单信息失败");
+		}
+		if(sort!=null) {
+			menu.setSequenceNumber(sort);
+		}else {
+			return new ResultInfo(-1, "操作失败");
+		}
+		int num=baseMenuMapper.updateByPrimaryKey(menu);
+		if(num>0) {
+			return new ResultInfo(1, "操作成功");
+		}else {
+			return new ResultInfo(-1, "操作失败");
+		}
+	}
+}

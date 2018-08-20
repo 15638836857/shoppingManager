@@ -1,0 +1,40 @@
+package com.palmble.sp.manger.model;
+
+public class ZsGoodsSkuAttrValue {
+    private Integer id;
+
+    private String attrValue;
+
+    private Integer skuAttrId;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public ZsGoodsSkuAttrValue() {
+    	
+    }
+public ZsGoodsSkuAttrValue(String attrValue,Integer skuAttrId) {
+    	this.attrValue=attrValue;
+    	this.skuAttrId=skuAttrId;
+    }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public String getAttrValue() {
+        return attrValue;
+    }
+
+    public void setAttrValue(String attrValue) {
+        this.attrValue = attrValue == null ? null : attrValue.trim();
+    }
+
+    public Integer getSkuAttrId() {
+        return skuAttrId;
+    }
+
+    public void setSkuAttrId(Integer skuAttrId) {
+        this.skuAttrId = skuAttrId;
+    }
+}

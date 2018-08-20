@@ -1,0 +1,488 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.palmble.sp.manger.dao.MemberUserMapper" >
+
+  <resultMap id="BaseResultMap" type="com.palmble.sp.manger.model.MemberUser">
+  <id column = "id" property = "id" jdbcType = "INTEGER"/>
+  <result column = "name" property = "name" jdbcType = "VARCHAR"/>
+  <result column = "phone" property = "phone" jdbcType = "VARCHAR"/>
+  <result column = "role" property = "role" jdbcType = "INTEGER"/>
+  <result column = "grade" property = "grade" jdbcType = "INTEGER"/>
+  <result column = "e_mail" property = "eMail" jdbcType = "VARCHAR"/>
+  <result column = "address" property = "address" jdbcType = "VARCHAR"/>
+  <result column = "state" property = "state" jdbcType = "INTEGER"/>
+  <result column = "id_number" property = "idNumber" jdbcType = "VARCHAR"/>
+  <result column = "create_time" property = "createTime" jdbcType = "TIMESTAMP"/>
+  <result column = "update_time" property = "updateTime" jdbcType = "TIMESTAMP"/>
+  <result column = "qq" property = "qq" jdbcType = "VARCHAR"/>
+  <result column = "capital" property = "capital" jdbcType = "DOUBLE"/>
+  <result column = "del_state" property = "delState" jdbcType = "INTEGER"/>
+  <result column = "nick_name" property = "nickName" jdbcType = "VARCHAR"/>
+  <result column = "user_name" property = "userName" jdbcType = "VARCHAR"/>
+  <result column = "password" property = "password" jdbcType = "VARCHAR"/>
+  <result column = "remarks" property = "remarks" jdbcType = "VARCHAR"/>
+  <result column = "balance" property = "balance" jdbcType = "DOUBLE"/>
+  <result column = "integral" property = "integral" jdbcType = "DOUBLE"/>
+  <result column = "cash_coupon" property = "cashCoupon" jdbcType = "DOUBLE"/>
+  <result column = "bill_id" property = "billId" jdbcType = "INTEGER"/>
+  </resultMap>
+  
+
+   <insert id="insert" parameterType="com.palmble.sp.manger.model.MemberUser" >
+    insert into member_user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="phone != null" >
+        phone,
+      </if>
+      <if test="role != null" >
+        role,
+      </if>
+      <if test="grade != null" >
+        grade,
+      </if>
+      <if test="eMail != null" >
+        e_mail,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="state != null" >
+        state,
+      </if>
+      <if test="idNumber != null" >
+        id_number,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="qq != null" >
+        qq,
+      </if>
+      <if test="capital != null" >
+        capital,
+      </if>
+      <if test="delState != null" >
+        del_state,
+      </if>
+      <if test="nickName != null" >
+        nick_name,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="remarks != null" >
+        remarks,
+      </if>
+      <if test="balance != null" >
+        balance,
+      </if>
+      <if test="integral != null" >
+        integral,
+      </if>
+      <if test="cashCoupon != null" >
+        cash_coupon,
+      </if>
+      <if test="billId != null" >
+        bill_id,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="name != null" >
+        #{name},
+      </if>
+      <if test="phone != null" >
+        #{phone},
+      </if>
+      <if test="role != null" >
+        #{role},
+      </if>
+      <if test="grade != null" >
+        #{grade},
+      </if>
+      <if test="eMail != null" >
+        #{eMail},
+      </if>
+      <if test="address != null" >
+        #{address},
+      </if>
+      <if test="state != null" >
+        #{state},
+      </if>
+      <if test="idNumber != null" >
+        #{idNumber},
+      </if>
+      <if test="createTime != null" >
+        #{createTime},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime},
+      </if>
+      <if test="qq != null" >
+        #{qq},
+      </if>
+      <if test="capital != null" >
+        #{capital},
+      </if>
+      <if test="delState != null" >
+        #{delState},
+      </if>
+      <if test="nickName != null" >
+        #{nickName},
+      </if>
+      <if test="userName != null" >
+        #{userName},
+      </if>
+      <if test="password != null" >
+        #{password},
+      </if>
+      <if test="remarks != null" >
+        #{remarks},
+      </if>
+      <if test="balance != null" >
+        #{balance},
+      </if>
+      <if test="integral != null" >
+        #{integral},
+      </if>
+      <if test="cashCoupon != null" >
+        #{cashCoupon},
+      </if>
+      <if test="billId != null" >
+        #{billId},
+      </if>
+    </trim>
+  </insert>
+  
+  <insert id="insertFully" parameterType="com.palmble.sp.manger.model.MemberUser" >
+    insert into user (id,name,phone,role,grade,e_mail,address,state,id_number,create_time,update_time,qq,capital,del_state,nick_name,user_name,password,remarks,balance,integral,cash_coupon,bill_id)
+    values (#{id,jdbcType=INTEGER},#{name,jdbcType=VARCHAR},#{phone,jdbcType=VARCHAR},#{role,jdbcType=INTEGER},#{grade,jdbcType=INTEGER},#{eMail,jdbcType=VARCHAR},#{address,jdbcType=VARCHAR},#{state,jdbcType=INTEGER},#{idNumber,jdbcType=VARCHAR},#{createTime,jdbcType=TIMESTAMP},#{updateTime,jdbcType=TIMESTAMP},#{qq,jdbcType=VARCHAR},#{capital,jdbcType=DOUBLE},#{delState,jdbcType=INTEGER},#{nickName,jdbcType=VARCHAR},#{userName,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR},#{remarks,jdbcType=VARCHAR},#{balance,jdbcType=DOUBLE},#{integral,jdbcType=DOUBLE},#{cashCoupon,jdbcType=DOUBLE},#{billId,jdbcType=INTEGER})
+  </insert>
+  
+  <delete id="deleteById" parameterType="java.lang.Integer" >
+    delete from member_user
+    where id = #{id}
+  </delete>
+  
+  <update id="updateById" parameterType="com.palmble.sp.manger.model.MemberUser">
+  update member_user
+  <set>
+      <if test="id != null" >
+        id = #{id},
+      </if>
+      <if test="name != null" >
+        name = #{name},
+      </if>
+      <if test="phone != null" >
+        phone = #{phone},
+      </if>
+      <if test="role != null" >
+        role = #{role},
+      </if>
+      <if test="grade != null" >
+        grade = #{grade},
+      </if>
+      <if test="eMail != null" >
+        e_mail = #{eMail},
+      </if>
+      <if test="address != null" >
+        address = #{address},
+      </if>
+      <if test="state != null" >
+        state = #{state},
+      </if>
+      <if test="idNumber != null" >
+        id_number = #{idNumber},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime},
+      </if>
+      <if test="qq != null" >
+        qq = #{qq},
+      </if>
+      <if test="capital != null" >
+        capital = #{capital},
+      </if>
+      <if test="delState != null" >
+        del_state = #{delState},
+      </if>
+      <if test="nickName != null" >
+        nick_name = #{nickName},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName},
+      </if>
+      <if test="password != null" >
+        password = #{password},
+      </if>
+      <if test="remarks != null" >
+        remarks = #{remarks},
+      </if>
+      <if test="balance != null" >
+        balance = #{balance},
+      </if>
+      <if test="integral != null" >
+        integral = #{integral},
+      </if>
+      <if test="cashCoupon != null" >
+        cash_coupon = #{cashCoupon},
+      </if>
+      <if test="billId != null" >
+        bill_id = #{billId},
+      </if>
+  </set>
+    where id = #{id}
+  </update>
+  
+  <update id="updateFullyById" parameterType="com.palmble.sp.manger.model.MemberUser" >
+   update member_user 
+   set 
+   name=#{name,jdbcType=VARCHAR},
+   phone=#{phone,jdbcType=VARCHAR},
+   role=#{role,jdbcType=INTEGER},
+   grade=#{grade,jdbcType=INTEGER},
+   e_mail=#{eMail,jdbcType=VARCHAR},
+   address=#{address,jdbcType=VARCHAR},
+   state=#{state,jdbcType=INTEGER},
+   id_number=#{idNumber,jdbcType=VARCHAR},
+   create_time=#{createTime,jdbcType=TIMESTAMP},
+   update_time=#{updateTime,jdbcType=TIMESTAMP},
+   qq=#{qq,jdbcType=VARCHAR},
+   capital=#{capital,jdbcType=DOUBLE},
+   del_state=#{delState,jdbcType=INTEGER},
+   nick_name=#{nickName,jdbcType=VARCHAR},
+   user_name=#{userName,jdbcType=VARCHAR},
+   password=#{password,jdbcType=VARCHAR},
+   remarks=#{remarks,jdbcType=VARCHAR},
+   balance=#{balance,jdbcType=DOUBLE},
+   integral=#{integral,jdbcType=DOUBLE},
+   cash_coupon=#{cashCoupon,jdbcType=DOUBLE},
+   bill_id=#{billId,jdbcType=INTEGER}
+   where id = #{id}
+  </update>
+  
+   <sql id="baseColumns">
+    id,
+    name,
+    phone,
+    role,
+    grade,
+    e_mail,
+    address,
+    state,
+    id_number,
+    date_format(create_time,'%Y-%m-%d %H:%i:%s') as create_time,
+    date_format(update_time,'%Y-%m-%d %H:%i:%s') as update_time,
+    qq,
+    capital,
+    del_state,
+    nick_name,
+    user_name,
+    password,
+    remarks,
+    balance,
+    integral,
+    cash_coupon,
+    bill_id
+  </sql>
+  
+   <sql id="queryParams">
+    <where >
+      <if test="name != null and name != ''">
+      name=#{name} 
+      </if>
+      <if test="phone != null and phone != ''" >
+      and  phone=#{phone} 
+      </if>
+      <if test="role != null and role != ''" >
+      and  role=#{role} 
+      </if>
+      <if test="grade != null and grade != ''" >
+      and  grade=#{grade} 
+      </if>
+      <if test="eMail != null and eMail != ''" >
+      and  e_mail=#{eMail} 
+      </if>
+      <if test="address != null and address != ''" >
+      and  address=#{address} 
+      </if>
+      <if test="state != null and state != ''" >
+      and  state=#{state} 
+      </if>
+      <if test="idNumber != null and idNumber != ''" >
+      and  id_number=#{idNumber} 
+      </if>
+      <if test="createTime != null and createTime != ''" >
+      and  create_time=#{createTime} 
+      </if>
+      <if test="updateTime != null and updateTime != ''" >
+      and  update_time=#{updateTime} 
+      </if>
+      <if test="qq != null and qq != ''" >
+      and  qq=#{qq} 
+      </if>
+      <if test="capital != null and capital != ''" >
+      and  capital=#{capital} 
+      </if>
+      <if test="delState != null and delState != ''" >
+      and  del_state=#{delState} 
+      </if>
+      <if test="nickName != null and nickName != ''" >
+      and  nick_name=#{nickName} 
+      </if>
+      <if test="userName != null and userName != ''" >
+      and  user_name=#{userName} 
+      </if>
+      <if test="password != null and password != ''" >
+      and  password=#{password} 
+      </if>
+      <if test="remarks != null and remarks != ''" >
+      and  remarks=#{remarks} 
+      </if>
+      <if test="balance != null and balance != ''" >
+      and  balance=#{balance} 
+      </if>
+      <if test="integral != null and integral != ''" >
+      and  integral=#{integral} 
+      </if>
+      <if test="cashCoupon != null and cashCoupon != ''" >
+      and  cash_coupon=#{cashCoupon} 
+      </if>
+      <if test="billId != null and billId != ''" >
+      and  bill_id=#{billId} 
+      </if>
+    </where >
+  </sql>
+  
+  <select id="getById" parameterType="java.lang.Integer" resultMap="BaseResultMap" >
+    select 
+    <include refid="baseColumns" />
+    from member_user
+    where id = #{id}
+  </select>
+  
+  <select id="find" parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select
+    <include refid="baseColumns" />
+    from member_user
+    <include refid="queryParams" />
+    <if test="sidx != null and sord != null" >
+      order by ${sidx} ${sord}
+    </if>
+    <if test="startRow != null and pageSize != null" >
+      limit #{startRow},#{pageSize}
+    </if>
+  </select>
+  
+  <select id="fuzzyQuery" parameterType="java.util.Map" resultMap="BaseResultMap" >
+    select
+    <include refid="baseColumns" />
+    from member_user
+     <where >
+       <if test="id != null and id != ''">
+      	id= #{id}
+      </if>
+      <if test="name != null and name != ''">
+      and name like concat(concat('%',#{name}),'%') 
+      </if>
+      <if test="phone != null and phone != ''" >
+      and  phone like concat(concat('%',#{phone}),'%') 
+      </if>
+      <if test="role != null and role != ''" >
+      and  role like concat(concat('%',#{role}),'%') 
+      </if>
+      <if test="grade != null and grade != ''" >
+      and  grade like concat(concat('%',#{grade}),'%') 
+      </if>
+      <if test="eMail != null and eMail != ''" >
+      and  e_mail like concat(concat('%',#{eMail}),'%') 
+      </if>
+      <if test="address != null and address != ''" >
+      and  address like concat(concat('%',#{address}),'%') 
+      </if>
+      <if test="state != null and state != ''" >
+      and  state like concat(concat('%',#{state}),'%') 
+      </if>
+      <if test="idNumber != null and idNumber != ''" >
+      and  id_number like concat(concat('%',#{idNumber}),'%') 
+      </if>
+      <if test="createTime != null and createTime != ''" >
+      and  create_time like concat(concat('%',#{createTime}),'%') 
+      </if>
+      <if test="updateTime != null and updateTime != ''" >
+      and  update_time like concat(concat('%',#{updateTime}),'%') 
+      </if>
+      <if test="qq != null and qq != ''" >
+      and  qq like concat(concat('%',#{qq}),'%') 
+      </if>
+      <if test="capital != null and capital != ''" >
+      and  capital like concat(concat('%',#{capital}),'%') 
+      </if>
+      <if test="delState != null and delState != ''" >
+      and  del_state like concat(concat('%',#{delState}),'%') 
+      </if>
+      <if test="nickName != null and nickName != ''" >
+      and  nick_name like concat(concat('%',#{nickName}),'%') 
+      </if>
+       <if test="userName != null and userName != ''" >
+      and  user_name like concat(concat('%',#{userName}),'%') 
+      </if>
+      <if test="password != null and password != ''" >
+       and  password like concat(concat('%',#{password}),'%') 
+      </if>
+      <if test="startTime != null and startTime != ''" >
+      <![CDATA[ and  create_time  > #{startTime}]]>
+      </if>
+      <if test="endTime != null and endTime != ''" >
+      <![CDATA[ and  create_time  < #{endTime}]]>
+      </if>
+      <if test="remarks != null and remarks != ''" >
+       and  remarks like concat(concat('%',#{remarks}),'%') 
+      </if>
+      <if test="balance != null and balance != ''" >
+      and  balance like concat(concat('%',#{balance}),'%') 
+      </if>
+      <if test="integral != null and integral != ''" >
+      and  integral like concat(concat('%',#{integral}),'%')  
+      </if>
+      <if test="cashCoupon != null and cashCoupon != ''" >
+      and  cash_coupon like concat(concat('%',#{cashCoupon}),'%') 
+      </if>
+      <if test="billId != null and billId != ''" >
+      and  bill_id like concat(concat('%',#{billId}),'%') 
+      </if>
+    </where >
+<!--      <if test="sidx != null and sord != null" > -->
+<!--       order by ${sidx} ${sord} -->
+<!--     </if> -->
+    <if test="sidx != null and sord != null" >
+      order by ${sidx} ${sord}
+    </if>
+<!--     <if test="startRow != null and pageSize != null" > -->
+<!--       limit #{startRow},#{pageSize} -->
+<!--     </if> -->
+  </select>
+  
+  <select id="count" parameterType="java.util.Map" resultType="java.lang.Integer" >
+    select count(*) from member_user
+    <include refid="queryParams" />
+  </select>
+</mapper>

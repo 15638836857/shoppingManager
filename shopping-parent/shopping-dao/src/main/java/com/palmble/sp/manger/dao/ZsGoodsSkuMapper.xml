@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.palmble.sp.manger.dao.ZsGoodsSkuMapper" >
+  <resultMap id="BaseResultMap" type="com.palmble.sp.manger.model.ZsGoodsSku" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="goodsId" property="goodsId" jdbcType="INTEGER" />
+    <result column="productSpec" property="productSpec" jdbcType="VARCHAR" />
+    <result column="productNo" property="productNo" jdbcType="VARCHAR" />
+    <result column="marketPrice" property="marketPrice" jdbcType="DECIMAL" />
+    <result column="shopPrice" property="shopPrice" jdbcType="DECIMAL" />
+    <result column="saleCount" property="saleCount" jdbcType="INTEGER" />
+    <result column="goodsStock" property="goodsStock"  />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, goodsId, productSpec, productNo, marketPrice, shopPrice, saleCount,goodsStock
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from zs_goods_sku
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from zs_goods_sku
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.palmble.sp.manger.model.ZsGoodsSku" >
+    insert into zs_goods_sku (id, goodsId, productSpec, 
+      productNo, marketPrice, shopPrice, 
+      saleCount,goodsStock)
+    values (#{id,jdbcType=INTEGER}, #{goodsId,jdbcType=INTEGER}, #{productSpec,jdbcType=VARCHAR}, 
+      #{productNo,jdbcType=VARCHAR}, #{marketPrice,jdbcType=DECIMAL}, #{shopPrice,jdbcType=DECIMAL}, 
+      #{saleCount,jdbcType=INTEGER},#{goodsStock})
+  </insert>
+  <insert id="insertSelective" parameterType="com.palmble.sp.manger.model.ZsGoodsSku" >
+    insert into zs_goods_sku
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="goodsId != null" >
+        goodsId,
+      </if>
+      <if test="productSpec != null" >
+        productSpec,
+      </if>
+      <if test="productNo != null" >
+        productNo,
+      </if>
+      <if test="marketPrice != null" >
+        marketPrice,
+      </if>
+      <if test="shopPrice != null" >
+        shopPrice,
+      </if>
+      <if test="saleCount != null" >
+        saleCount,
+      </if>
+      <if test="goodsStock!=null">goodsStock,</if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="goodsId != null" >
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="productSpec != null" >
+        #{productSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null" >
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shopPrice != null" >
+        #{shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="saleCount != null" >
+        #{saleCount,jdbcType=INTEGER},
+      </if>
+       <if test="goodsStock!=null">#{goodsStock},</if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.palmble.sp.manger.model.ZsGoodsSku" >
+    update zs_goods_sku
+    <set >
+      <if test="goodsId != null" >
+        goodsId = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="productSpec != null" >
+        productSpec = #{productSpec,jdbcType=VARCHAR},
+      </if>
+      <if test="productNo != null" >
+        productNo = #{productNo,jdbcType=VARCHAR},
+      </if>
+      <if test="marketPrice != null" >
+        marketPrice = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shopPrice != null" >
+        shopPrice = #{shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="saleCount != null" >
+        saleCount = #{saleCount,jdbcType=INTEGER},
+      </if>
+      <if test="goodsStock!=null">goodsStock=#{goodsStock},</if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.palmble.sp.manger.model.ZsGoodsSku" >
+    update zs_goods_sku
+    set goodsId = #{goodsId,jdbcType=INTEGER},
+      productSpec = #{productSpec,jdbcType=VARCHAR},
+      productNo = #{productNo,jdbcType=VARCHAR},
+      marketPrice = #{marketPrice,jdbcType=DECIMAL},
+      shopPrice = #{shopPrice,jdbcType=DECIMAL},
+      saleCount = #{saleCount,jdbcType=INTEGER}
+      <if test="goodsStock!=null">,goodsStock=#{goodsStock}</if>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+   <select id="selectGoodsSkuList" resultType="java.util.Map">
+      SELECT zsk.*,zc.catName FROM  zs_goods_sku_attr zsk  
+      LEFT JOIN zs_goods_category zc ON zsk.cateId=zc.id
+      WHERE 1=1 
+       <if test="skuId!=null"> and zsk.id=#{skuId}</if>
+       <if test="goodsCateId!=null"> and zsk.cateId=#{goodsCateId}</if>
+       <if test="sord!=null"> order by zsk.id  ${sord} </if>
+       <if test="page!=null and rows!=null"> limit #{page},#{rows} </if>
+  </select>
+  <select id="selectGoodsSkuCount" resultType="INTEGER">
+       SELECT count(1) FROM  zs_goods_sku_attr zsk    
+       LEFT JOIN zs_goods_category zc ON zsk.cateId=zc.id
+      WHERE 1=1 
+       <if test="skuId!=null"> and zsk.id=#{skuId}</if>
+       <if test="goodsCateId!=null"> and zsk.cateId=#{goodsCateId}</if>
+  </select>
+  <select id="selectSkuAttrBySkuId" resultType="STRING">
+       SELECT
+			zg.attrValue
+		FROM
+			zs_goods_sku_attr zk
+		LEFT JOIN zs_goods_sku_attrvalue zg ON zk.id = zg.skuAttrId
+		WHERE
+			zk.id = #{skId}
+  </select>
+  <select id="selectSkuAllAttrBySkuId" resultType="java.util.Map">
+    SELECT
+			zg.*
+		FROM
+			zs_goods_sku_attr zk
+		LEFT JOIN zs_goods_sku_attrvalue zg ON zk.id = zg.skuAttrId
+		WHERE
+			zk.id = #{skId}
+  </select>
+  <select id="selectADDGoodsSkuList"  resultType="java.util.Map">
+     SELECT
+			zg.*
+		FROM
+			zs_goods_sku_attr zk
+		LEFT JOIN zs_goods_sku_attrvalue zg ON zk.id = zg.skuAttrId
+   WHERE zg.id in
+      <foreach collection="skuvalueIds" item="item" index="index"
+            open="(" close=")" separator=",">
+            #{item}
+        </foreach>
+  
+      
+  </select>
+  <select id="selectSKUInfoByGoodsId" resultMap="BaseResultMap">
+     SELECT * FROM zs_goods_sku WHERE goodsId=#{goodsId}
+  </select>
+  <delete id="deleteSkuInfoByGoodsId">
+     DELETE FROM zs_goods_sku WHERE goodsId=#{goodsId}
+  </delete>
+</mapper>

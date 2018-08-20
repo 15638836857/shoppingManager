@@ -1,0 +1,200 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>后台管理</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="../hplus/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../hplus/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../hplus/css/animate.min.css" rel="stylesheet">
+    <link href="../hplus/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="../hplus/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../hplus/js/jquery.min.js?v=2.1.4"></script>
+    
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg fixed-nav" style="overflow-x:hidden;">
+<div id="top-alert" class="alert alert-danger alert-dismissable">
+    <button aria-hidden="true" class="close" type="button">×</button>
+    <span class="alert-content"></span>
+</div>
+<div style="padding: 10px;">
+    
+<div class="row">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5 id="title"></h5>
+                <div class="ibox-tools">
+                    <a class="toback" href="../auth_manager/index.html">返回上一页</a>
+                </div>
+            </div>
+            <div class="ibox-content">
+                <form  class="form-horizontal">
+                    <input type="hidden" name="userId">
+				    <div  id="inner">
+
+                    </div>
+              </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            <a class="btn btn-primary "href="javaScript:;" id="submitForm"  >确 定</a>
+                            <a class="btn btn-default"   href="javaScript:;history.back(-1)">取 消</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+</div>
+<script src="../hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="../hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="../layer-v3.1.1/layer/layer.js"></script>
+<script src="../js/js.js" charset="utf-8"></script>
+<!--<script src="../hplus/js/plugins/layer/layer.min.js"></script>-->
+<script src="../hplus/js/hplus.min.js?v=4.1.0"></script>
+<script src="../hplus/js/contabs.min.js"></script>
+<script src="../hplus/js/plugins/pace/pace.min.js"></script>
+
+<!-- jqGrid -->
+<script src="../hplus/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+<script src="../hplus/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+<script src="../js/showAlert.js" charset="utf-8"></script>
+<script src="../js/common.js"></script>
+
+
+<script>
+var userId=getQueryString("userId");
+$("input[name='userId']").val(userId);
+    $(document).ready(function(){
+    	 $('#top-alert').find('button').click();
+    	//动态往静态页填充所有权限信息
+    	$.ajax({
+            url: ctx+"/baseMenu/getAllMenu",
+            type:"POST",
+            dataType: "json",
+            data:{"userid":userId},
+           // contentType:"application/json;charset=UTF-8",
+            async:false,
+            success: function (data) {
+            	var allMenuHTML = "";
+            	for(var i=0; i< data.length;i++){
+            		allMenuHTML+="<div class='panel panel-default'>"+
+		                    "<div class='panel-heading'>";
+		                    if(data[i].flag=='true'){
+		                    	allMenuHTML+="<label><input type=\"checkbox\" name='checkId' onchange='baseMenuChange(this)' id='menu"+data[i].menuId+"' value='"+data[i].menuId+"' checked='checked'>"+data[i].menuName+"</label>";
+		                    }else{
+		                    	allMenuHTML+="<label><input type=\"checkbox\" name='checkId' onchange='baseMenuChange(this)' id='menu"+data[i].menuId+"' value='"+data[i].menuId+"'>"+data[i].menuName+"</label>";
+		                    }
+		                    allMenuHTML+="</div><tr>";
+	                var parentMenus=data[i].menuInfo;
+	             	parentMenus=JSON.parse(parentMenus);
+	             	allMenuHTML+="<table class='table table-bordered'>";
+	             	for(var j=0; j<parentMenus.length;j++){
+	             	allMenuHTML+="<tr><td width='15%'>";
+	             		if(parentMenus[j].flag=='true'){
+	             			allMenuHTML+="<label><input type=\"checkbox\" name='checkId' id='menu"+parentMenus[j].menuId+"' onchange=childMenu(this) class='parentMenu"+parentMenus[j].menuId+"' value='"+parentMenus[j].menuId+"'  checked='checked'> "+parentMenus[j].menuName+"</label>";
+	             		}else{
+	             			allMenuHTML+="<label><input type=\"checkbox\" name='checkId' id='menu"+parentMenus[j].menuId+"' onchange=childMenu(this) class='parentMenu"+parentMenus[j].menuId+"' value='"+parentMenus[j].menuId+"'> "+parentMenus[j].menuName+"</label></br>";
+	             		}
+						var menus=parentMenus[j].menuInfo;
+						menus=JSON.parse(menus);
+						allMenuHTML+="</td><td>";
+						for(var m=0; m< menus.length;m++){
+							if(menus[m].flag=='true'){
+								allMenuHTML+="<label style=\"padding: 0px 0px 0px 30px;\"><input name='checkId' class='parentMenu"+parentMenus[j].menuId+"' onchange=btnMenu(this) type='checkbox'id='menu"+menus[m].menuId+"'  value='"+menus[m].menuId+"' checked='checked' >"+menus[m].menuName+"</label>";
+							}else{
+								allMenuHTML+="<label style=\"padding: 0px 0px 0px 30px;\"><input name='checkId' class='parentMenu"+parentMenus[j].menuId+"' onchange=btnMenu(this) type='checkbox'id='menu"+menus[m].menuId+"'  value='"+menus[m].menuId+"'  >"+menus[m].menuName+"</label>";
+							}
+						}
+						allMenuHTML+="</td></tr>";
+             		}
+					allMenuHTML+="</table></div>";
+                
+                }
+            	$("#inner").html(allMenuHTML);
+            }
+        })
+
+        $("#submitForm").click(function (){
+    		var obj = document.getElementsByName("checkId");
+    		urids = [];
+		    for(k in obj){
+		        if(obj[k].checked)
+		        	urids.push(obj[k].value);
+		    }
+		    if (urids.length==0) {
+				layer.msg("至少选择一项权限");
+				return false;
+			}
+		    $.ajax({
+		        url:ctx+"/admin/addOreditRule" ,
+		        data: {"urids":urids,
+		        		"userId":$("input[name='userId']").val()},
+		        type: "POST",
+		        dataType: "json",
+// 		        async:false,
+		        success: function (data) {
+		        	if(data.code=='1'){
+		        		layer.msg(data.msg,{icon: 1});
+		        		setTimeout(function(){
+		        			window.location="admin_auth_manager.html";
+		                },1500);
+		        	}else{
+		        		showMsg(data.msg);
+		        	}
+		        },
+		        error: function (data) {
+		            try {
+		                layer.msg("请求异常");
+		                return false;
+		            } catch (e) {
+		                console.log(e);
+		            }
+		        }
+		    });
+    	})
+    });
+    function baseMenuChange(obj){
+    	console.log($(obj).prop('checked'));
+    	if($(obj).prop('checked')){
+	    	$(obj).parent().parent().parent().find("input[type='checkbox']").prop("checked","checked")
+    	}else{
+    		$(obj).parent().parent().parent().find("input[type='checkbox']").removeAttr("checked")
+    	}
+    }
+    
+    function childMenu(obj){
+    	if($(obj).prop('checked')){
+	    	$(obj).parent().parent().parent().find("input[type='checkbox']").prop("checked","checked")
+    	}else{
+    		$(obj).parent().parent().parent().find("input[type='checkbox']").removeAttr("checked")
+    	}
+    }
+    function btnMenu(obj){
+    	console.log(123);
+    	if($(obj).prop('checked')){
+    		console.log()
+	    	$(obj).parent().parent().parent().find("td:eq(0)").find("input[type='checkbox']").prop("checked","checked")
+    	}else{
+    		if($(obj).parent().parent().parent().find("td:eq(1)").find("input[type='checkbox']:checked").length==0){
+    			$(obj).parent().parent().parent().find("td:eq(0)").find("input[type='checkbox']").removeAttr("checked")
+    		}
+    	}
+    }
+    function cancel(){
+    	layer.close();
+    }
+
+</script>
+</body>
+</html>

@@ -1,0 +1,28 @@
+package com.palmble.sp.manger.dao;
+
+import java.util.List;
+import java.util.Map;
+
+import org.apache.ibatis.annotations.Mapper;
+
+import com.palmble.sp.manger.model.UserPermission;
+
+@Mapper
+public interface UserPermissionMapper{
+    int deleteByPrimaryKey(Integer id);
+
+    int insert(UserPermission record);
+
+    int insertSelective(UserPermission record);
+
+    List<UserPermission> selectByGroupOrUserId(Integer id);
+
+    int updateByPrimaryKeySelective(UserPermission record);
+
+    int updateByPrimaryKey(UserPermission record);
+    
+    List<Integer> selectPrivilegeUrlByGroupOrUserId(Integer userid);
+    
+    Map<String,Object> getByUserIdAndUrl(Map<String,Object> map);
+    
+}

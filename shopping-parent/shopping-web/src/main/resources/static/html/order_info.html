@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title>后台管理</title>
+    <link rel="shortcut icon" href="/favicon.ico">
+    <link href="../hplus/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../hplus/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+    <link href="../hplus/css/animate.min.css" rel="stylesheet">
+    <link href="../hplus/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    <link href="../hplus/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+    <link rel="stylesheet" href="../css/common.css">
+    <script src="../hplus/js/jquery.min.js?v=2.1.4"></script>
+    
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg fixed-nav" style="overflow-x:hidden;">
+<div id="top-alert" class="alert alert-danger alert-dismissable">
+    <button aria-hidden="true" class="close" type="button">×</button>
+    <span class="alert-content"></span>
+</div>
+<div style="padding: 10px;">
+    
+<style>
+    td{
+        word-break:break-all;
+    }
+</style>
+<div class="row" id="content">
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-content" style="padding: 0;">
+                <table class="table table-bordered" id="goodsInfo">
+                 </table>
+                   </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+    	<div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>物流信息</h5>
+            </div>
+            <div class="ibox-content" style="padding: 0;">
+            	 <table class="table table-bordered" id="express">
+                </table>
+            </div>
+        </div>
+     </div>
+        <div class="col-sm-12">
+    	<div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>收货人信息</h5>
+            </div>
+            <div class="ibox-content" style="padding: 0;">
+                  <table class="table table-bordered" id="orderInfoRight">
+                </table>
+            </div>
+        </div>
+     </div>
+    <div class="col-sm-12">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>订单信息</h5>
+            </div>
+            <div class="ibox-content" style="padding: 0;">
+                <table class="table table-bordered" id="orderInfo">
+                </table>
+            </div>
+        </div>
+    </div>
+    <a href="#" name="abc" ></a>
+    <div class="col-sm-12" id="afterSale" style="display:none;">
+        <div class="ibox float-e-margins">
+            <div class="ibox-title">
+                <h5>售后信息</h5>
+            </div>
+            <div class="ibox-content" style="padding: 0;">
+                <table class="table table-bordered" id="afterSaleTable">
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<script src="../hplus/js/bootstrap.min.js?v=3.3.6"></script>
+<script src="../hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+<script src="../hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+<script src="../layer-v3.1.1/layer/layer.js"></script>
+<!--<script src="../hplus/js/plugins/layer/layer.min.js"></script>-->
+<script src="../hplus/js/hplus.min.js?v=4.1.0"></script>
+<script src="../hplus/js/contabs.min.js"></script>
+<script src="../hplus/js/plugins/pace/pace.min.js"></script>
+
+<!-- jqGrid -->
+<script src="../hplus/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+<script src="../hplus/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+<!--<script src="../hplus/js/plugins/iCheck/icheck.min.js"></script>-->
+<script src="../js/common.js"></script>
+
+<script>
+var url='/order/getOrderInfo';
+var id=getQueryString('id');
+var postData={id:id};
+    $.get(url,postData,function(obj){
+    	var orderInfo=obj.data;
+    	var goods=orderInfo.zsGoods;
+    	var consignee=orderInfo.consignee;
+    	console.log(obj);
+    	$.each(goods,function(i,val){
+    		var img;
+    		if(val.goodsCoverThums){
+    			img=val.goodsCoverThums;
+    		}else{
+    			img=val.goodsCoverImg;
+    		}
+//     		var delGoodsHtml('<tr>'+
+//     							+'<td>商品为'+val.id+'的商品已被删除</td>'
+//     						+'</tr>');
+    		$('#goodsInfo').append('<tr>'
+                        +'<th colspan="4">'
+                           +' 商品信息'
+                        +'</th>'
+                    +'</tr>'
+                   +' <th colspan="2">'
+                    +' 商品'
+                 +'</th>'
+                 +' <th>'
+                  +' 价格'
+               +'</th>'
+             +' <th>'
+              +' 数量'
+                    +'<tr>'
+                        +'<td width="50">'
+                        +'<a url="zsGoodsAdd.html?id='+val.id+'" data-title="商品详情" onclick="layer_open(this,3)">'
+                            +'<img src="'+img+'" width="80" height="80">'
+                        +'</a>'
+                        +'</td>'
+                        +'<td width="300">'
+                            +'<p width="280"><strong>'+val.goodsName+'</strong>'
+                            +'</p>'
+                        +'</td>'
+                        +'<td>￥'+val.shopPrice+'</td>'
+                        +'<td>'+val.number+'</td>'
+                    +'</tr>');
+    	});
+    	var orderStatus;
+    	if(orderInfo.orderStatus==0){
+    		orderStatus= "交易关闭";
+    	}
+    	if(orderInfo.orderStatus==1){
+    		orderStatus= "待付款";
+    	}
+    	if(orderInfo.orderStatus==2){
+    		orderStatus= "待发货";
+    	}
+    	if(orderInfo.orderStatus==3){
+    		orderStatus= "待收货";
+    	}
+    	if(orderInfo.orderStatus==4){
+    		orderStatus= "已收货";
+    	}
+    	if(orderInfo.orderStatus==5){
+    		orderStatus= "申请退货";
+    	}
+    	if(orderInfo.orderStatus==6){
+    		orderStatus= "待退货";
+    	}
+    	if(orderInfo.orderStatus==7){
+    		orderStatus= "退货中";
+    	}
+    	if(orderInfo.orderStatus==8){
+    		orderStatus= "已退货";
+    	}
+    	var expressHtml='<tr>'
+            +'<td>快递单号</td>'
+            +'<td>'+orderInfo.expressNo+'</td>'
+        +'</tr>';
+    	$('#express').append(expressHtml);
+    	var html='<tr>'
+                +'<td>订单编号</td>'
+                +'<td>'+orderInfo.orderNumber+'</td>'
+            +'</tr>'
+            +'<tr>'
+                +'<td>会员用户名</td>'
+                +'<td>'+orderInfo.memberNumber+'</td>'
+            +'</tr>'
+            +'<tr>'
+                +'<td>订单状态</td>'
+                +'<td>'+orderStatus+'</td>'
+            +'</tr>'
+            +'<tr>'
+            +'<td>实付金额</td>'
+            +'<td>'+orderInfo.totalAmount+'</td>'
+       		 +'</tr>'
+      	  +'<tr>'
+            +'<tr>'
+                +'<td>积分</td>'
+                +'<td>'+orderInfo.integral+'</td>'
+            +'</tr>'
+            +'<tr>'
+                +'<td>用户备注</td>'
+                +'<td>'+orderInfo.userNotes+'</td>'
+            +'</tr>'
+            +'<tr>'
+                +'<td>下单日期</td>'
+                +'<td>'+orderInfo.createTime+'</td>'
+            +'</tr>'
+            +'<tr>'
+        	+'<td>管理员备注</td>'
+        	+'<td style="padding:0"><textarea id="adminNote" style="width:90%;height:100%;margin-bottom:-5px;">'+orderInfo.adminNotes+'</textarea>'
+        	+'<button class="btn btn-sm btn-primary" onclick=updateNote('+orderInfo.id+') style="position:absolute;margin-top:6px;">修改</button></td>'
+        +'</tr>';
+            var consigneeHtml= '<tr>'
+            +'<td>收货人</td>'
+            +'<td>'+consignee.name+'</td>'
+        +'</tr>'
+        +'<tr>'
+        +'<td>电话</td>'
+        +'<td>'+consignee.phone+'</td>'
+   		 +'</tr>'
+   		 +'<tr>'
+         +'<td>省份</td>'
+         +'<td>'+consignee.province+'</td>'
+    		 +'</tr>'
+            +'<tr>'
+            +'<td>城市</td>'
+            +'<td>'+consignee.city+'</td>'
+       		 +'</tr>'
+               +'<tr>'
+            +'<td>详细地址</td>'
+            +'<td>'+consignee.addressInfo+'</td>'
+        +'</tr>';
+            if(orderInfo.orderStatus==2){
+            	html+='<tr>'
+                +'<td>操作</td>'
+                +'<td>'
+                +'<button class="btn btn-sm btn-primary confirm" onclick=confirmCollect()>确认收货</button>'
+                +'</td>'
+            +'</tr>';
+            }
+            var afterSale=orderInfo.afterSale;
+            if(afterSale!=null){
+            	$('#afterSale').show();
+            	var type=afterSale.type;
+            	if(type==0){
+            		type='补货';
+            	}
+            	if(type==1){
+            		type='退款';
+            	}
+            	if(type==2){
+            		type='退货';
+            	}
+            	if(type==3){
+            		type='维修';
+            	}
+            	var afterSaleHtml='<tr>'
+                    +'<td>售后类型</td>'
+                    +'<td>'+type+'</td>'
+               		 +'</tr>'
+               		+'<tr>'
+                    +'<td>问题说明</td>'
+                    +'<td>'+afterSale.reason+'</td>'
+               		 +'</tr>'
+               		+'<tr>'
+                    +'<td>发起时间</td>'
+                    +'<td>'+afterSale.createTime+'</td>'
+               		 +'</tr>'
+               		+'<tr>'
+                    +'<td>修改时间</td>'
+                    +'<td>'+afterSale.updateTime+'</td>'
+               		 +'</tr>';
+            	if(orderInfo.orderStatus==6||orderInfo.orderStatus == 7){
+            		afterSaleHtml+='<tr>'
+                    +'<td>操作</td>'
+                    +'<td>'
+                    +'<button class="btn btn-sm btn-primary confirm" id="confirmReturn">退款</button>'
+                    +'</td>'
+                +'</tr>';
+                };
+                if(orderInfo.orderStatus==5){
+            		afterSaleHtml+='<tr>'
+                        +'<td>操作</td>'
+                        +'<td>'
+                        +'<button class="btn btn-sm btn-primary confirm" onclick=agree('+orderInfo.id+')>同意</button>'
+                        +'</td>'
+                    +'</tr>';
+                }
+            	$('#afterSaleTable').append(afterSaleHtml);
+            }
+            
+//     	);
+    $('#orderInfoRight').append(consigneeHtml);
+    $('#orderInfo').append(html);
+    $('#confirmReturn').click(function confirmReturn(){
+    	parent.confirmReturn(orderInfo);
+    });
+    if(getQueryString('sh')){
+    	location.href='#abc';
+    }
+    });
+function confirmCollect(){
+	var data={id:id};
+	$.get('/order/confirmCollect',data,function(obj){
+		parent.layer.closeAll();
+		parent.updateAlert(obj.msg,'alert-success');
+	})
+}
+// function check(){
+// 	layer.open
+// }
+function updateNote(id){
+	var note=$('#adminNote').val();
+	var id=id;
+	var url="/order/edit";
+	var data={id:id,adminNotes:note};
+	$.get(url,data,function(obj){
+		layer.msg(obj.msg,{icon:1});
+	});
+}
+function agree(){
+	var url='/order/agree';
+	var data={id:id};
+	$.post(url,data,function(obj){
+		layer.msg(obj.msg,{icon:1});
+		setTimeout(function(){
+			location.reload();
+		},1500);
+	});
+}
+</script>
+
+</body>
+</html>

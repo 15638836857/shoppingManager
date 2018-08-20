@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Implementation-Title: shopping-web
+Implementation-Version: 0.0.1-SNAPSHOT
+Built-By: malingbing
+Implementation-Vendor-Id: com.palmble.sp.manger
+Build-Jdk: 1.8.0_40
+Implementation-URL: http://projects.spring.io/spring-boot/shopping-par
+ ent/shopping-web/
+Created-By: Maven Integration for Eclipse
+Implementation-Vendor: Pivotal Software, Inc.
+

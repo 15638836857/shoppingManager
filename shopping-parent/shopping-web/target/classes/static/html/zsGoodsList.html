@@ -1,0 +1,543 @@
+<!DOCTYPE html>
+<html>
+
+
+<!-- Mirrored from www.zi-han.net/theme/hplus/table_jqgrid.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 20 Jan 2016 14:20:02 GMT -->
+<head>
+  <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+    <title></title>
+
+    <link rel="shortcut icon" href="favicon.ico">
+    <link href="../hplus/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+    <link href="../hplus/css/font-awesome.min93e3.css?v=4.4.0" rel="stylesheet">
+
+    <!-- jqgrid-->
+    <link href="../hplus/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+
+    <link href="../hplus/css/animate.min.css" rel="stylesheet">
+    <link href="../hplus/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+    
+      
+
+    <link href="../hplus/css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/chosen/chosen.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/colorpicker/css/bootstrap-colorpicker.min.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/cropper/cropper.min.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/switchery/switchery.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/nouslider/jquery.nouislider.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/datapicker/datepicker3.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/ionRangeSlider/ion.rangeSlider.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/ionRangeSlider/ion.rangeSlider.skinFlat.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css" rel="stylesheet">
+    <link href="../hplus/css/plugins/clockpicker/clockpicker.css" rel="stylesheet">
+    <link href="../hplus/css/animate.min.css" rel="stylesheet">
+    
+    
+    
+	
+	<script src="../hplus/js/jquery.min.js?v=2.1.4"></script>
+    <script src="../hplus/js/bootstrap.min.js?v=3.3.6"></script>
+    <script src="../hplus/js/plugins/peity/jquery.peity.min.js"></script>
+    <script src="../hplus/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+    <script src="../hplus/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+    <script src="../hplus/js/content.min.js?v=1.0.0"></script>
+   <script src="../layer-v3.1.1/layer/layer.js"></script>
+ 
+<script src="../js/common2.js"></script>
+<link rel="stylesheet" href="../css/common.css">
+
+
+ <!-- <link rel="stylesheet" href="../amaze/chosen/docsupport/style.css">
+  <link rel="stylesheet" href="../amaze/chosen/docsupport/prism.css">
+  <link rel="stylesheet" href="../amaze/chosen/css/chosen.css"> -->
+
+    
+    <style>
+        /* Additional style to fix warning dialog position */
+        #xiangqing{display:block;padding:3px;margin-right:5px; background:#44BB5C;width:80px}
+        #alertmod_table_list_2 {
+            top: 900px !important;
+        }
+       /*  #bigBody{margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;
+        padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px}
+        #ibox-content{
+        margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;
+        padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px
+        }
+        #gbox_table{margin-left:5px;margin-right:5px;margin-top:5px;margin-bottom:5px;
+        padding-left:5px;padding-right:5px;padding-top:5px;padding-bottom:5px}
+        .modal-content{
+            position: relative;
+              left: -150px;
+             width: 950px;
+        } */
+        /* #imgs_group{
+         position: relative;
+              left: -150px;
+        } */
+        /* .ibox-content{
+        padding: 0px 10px 20px;
+        margin-top: 1px;
+        }
+        .ibox{
+        margin-top: 1px;
+        } */
+        .ui-jqgrid td input, .ui-jqgrid td select, .ui-jqgrid td textarea {
+          margin-left: -4px;
+                  /* padding-right: 5px; */
+         }
+        .ui-jqgrid {
+            font-size: 12px;
+        }
+        img {
+		    border: 0;
+		    margin-left: -5px;
+		}
+
+ 
+
+
+
+
+       #table td:hover > img {
+	  transform: scale(2, 2);
+	  transition: .3s transform;
+	}
+
+
+         .ui-jqgrid tr.ui-row-ltr td {
+            /* text-align: center; */
+            font-size: 12px;
+            font-weight:200;
+        } 
+      
+    </style>
+
+</head>
+
+<body class="fixed-sidebar full-height-layout gray-bg fixed-nav"	style="overflow-x: hidden;">
+<div style="padding: 10px;">
+    
+
+<div class="ibox">
+<div id="bigPic" style=" position:absolute;display:none;z-index:999;">
+                          <img src="" width="260px" id="pre_view"/><br />
+                          </div>
+			    <div class="ibox-content">
+			        <div class="row">
+				           <div class="col-xs-3">
+				               <a href="javascript:;" url="zsGoodsAdd.html" data-title="添加" onclick="layer_open(this,1)" class="btn btn-primary">新增</a>
+				           </div>
+				           
+				           <div class="col-xs-9" style="text-align: right;">
+			                 <form class="form-inline" id="form-search" action="/goods/getGoodsList">
+							    
+		                        <div class="input-group" style="text-align: left;">
+		                        <select class="chosen-select" name="goodsId" id="goodsId"
+								        data-placeholder="请选择商品" 
+								        style="width: 150px">
+								    
+								</select>
+		                      
+			                    <input type="hidden"  placeholder="输入关键字" name="value" id="value">
+			                    </div>
+			                     <div class="form-group">
+		                            <!-- <label class="font-noraml">分类</label> -->
+		                            <div class="input-group" style="text-align: left;">
+		                                <select  class="form-control"  name="goodsCateId" id="goodsCateId" style="width: 150px;">
+		                                
+		                                </select>
+		                            </div>
+		                        </div>
+			                    <div class="input-group">
+			                        <select name="isAdminRecom" class="form-control" id="isAdminRecom">
+			                               <option value="">选择是否推荐</option>
+			                              <option value="1">是</option>
+			                              <option value="0">否</option>
+			                        </select>
+			                        
+			                    </div>
+			                    
+			                    <div class="input-group">
+			                        <select name="isSale" class="form-control" id="isSale">
+			                             <option value="">状态</option>
+			                            <option value="1">上架</option>
+			                            <option value="0">下架</option>
+			                        </select>
+			                    
+			                    </div>
+			                   
+			                    <div class="input-group">
+			                        <span class="input-group-btn">
+			                            <button class="btn-sm btn-primary" type="button" id ="search-btn" ><i class="fa fa-search"></i></button>
+			                        </span>
+			                        <span class="input-group-btn">
+			                            <button class="btn-sm btn-primary " type="button" id="search-clear"><i class="fa fa-undo"></i></button>
+			                        </span>
+			                    </div>
+			                    
+								
+			                 </form>
+                         </div>
+			         </div>
+            
+                </div>
+        <div class="ibox-content">
+          <div class="ibox ">
+                 <div class="jqGrid_wrapper">
+                     <table id="table"></table>
+                     <div id="pager_list_1"></div>
+                 </div>
+              </div>
+          </div>
+      </div>
+      </div>
+   <!--  </div> -->
+   <script src="../js/pathjs.js"></script>
+    <script>
+        $(document).ready(function(){
+      /*   $(".summernote").summernote({lang:"zh-CN"}); */
+        
+		$.jgrid.defaults.styleUI="Bootstrap";
+	
+		 $("#table").jqGrid({
+	           url:_goodsList,
+		//data:mydata,
+		       datatype:"json",
+				height:"auto",
+				autowidth:true,
+				shrinkToFit:true,
+				rowNum:5,
+				sortname: 'catSort',
+				rowList:[5,15,20],
+				colNames:["ID","图片","商品编号","名称","分类","商城平均价","店铺平均价","总库存","排序","状态","推荐","操作"],
+				colModel:[
+					{name:"id",index:"id",editable:true,width:25,sorttype:"int",search:true},
+					{name:'goodsCoverImg', index: 'goodsCoverImg', width: 80, align: "center", sortable: false, editable: false, formatter: alarmFormatter },
+				    {name:"goodsNo",index:"goodsNo",editable:true,width:60},
+					{name:"goodsName",index:"goodsName",editable:true,width:80},
+					{name:"catName",index:"catName",editable:true,width:80},
+					{name:"marketPrice",index:"marketPrice",editable:true,width:60,sorttype:"float"},
+					{name:"shopPrice",index:"shopPrice",editable:true,width:60,sorttype:"float"},
+					{name:"goodsStock",index:"goodsStock",editable:true,width:40},
+					{name:"catSort",index:"catSort",width:50,sortable: true,hidden:false,formatter: function (a, b, c) {
+						var url=_editGoodsSort+"&id="+c.id;
+	                    return '<input type="number" onchange="updateSort(this)" data-url="'+url+'" class="form-control input-sm" data-id="'+c.id+'" data-old="'+a+'" value="'+a+'" />';
+	                }},
+					{name:"isSale",index:"isSale",editable: false,sortable: false,width:40,
+						formatter:function(a,b,c){
+							 if(a == false){
+			                        return '<a href="javascript:;" data-id='+c.id+' data-status="0" onclick="setIsSale(this)"><span class="label label-danger" title="下架">下架</span></a>';
+			                    } else{
+			                        return '<a href="javascript:;" data-id='+c.id+' data-status="1" onclick="setIsSale(this)"><span class="label label-primary" title="上架">上架</span></a>';
+			                    }
+						}},
+					{name:"isAdminRecom",index:"isAdminRecom",editable:true,width:40,
+						formatter:function(a,b,c){
+							 if(a == false){
+			                        return '<a href="javascript:;" data-id='+c.id+' data-status="0" onclick="setIsAdminRecom(this)"><span class="label label-danger" title="否">否</span></a>';
+			                    } else{
+			                        return '<a href="javascript:;" data-id='+c.id+' data-status="1" onclick="setIsAdminRecom(this)"><span class="label label-primary"  title="是">是</span></a>';
+			                    }
+						}},
+					/* {width:80,sortable: false,align:'left',formatter: function (a, b, c) {
+	                    var btn = '<a href="admin_add.html?id='+c.id+'&name='+c.loginiNo+'&groupId='+c.groupId+'&url=admin_list.html">';
+	                    btn += '<a href="javascript:;"><span class="label label-danger" id="xiangqing" title="详情"  data-id='+c.id+' onclick="de(this)">详情</span></a>';
+	                    return btn;
+                     }}, */
+					{width:80,sortable: false,align:'left',formatter: function (a, b, c) {
+						var editurl='zsGoodsAdd.html'+'?id='+c.id;
+					    var btn = '<a url="'+editurl+'" href="javascript:;" data-title="编辑商品" onclick="layer_open(this,1)"><span class="label label-info" title="编辑">编辑</span></a>&nbsp;';
+						// var btn = '<a href="?id='+c.id+'&name='+c.loginiNo+'&groupId='+c.groupId+'&url=admin_list.html"><span class="label label-info" title="编辑">编辑</span></a>&nbsp;';
+		                    btn += '<a href="javascript:;"><span class="label label-danger" title="删除"  data-id='+c.id+' onclick="del(this)">删除</span></a>';
+		                    return btn;
+                     }},
+				],
+			pager:"#pager_list_1",
+			viewrecords:true,
+			caption:"商品列表",
+			hidegrid:false,
+			jsonReader: {    //jsonReader来跟服务器端返回的数据做对应  
+	           //包含实际数据的数组  
+		        root: "data",  //包含实际数据的数组  
+	            page: "pageInfo.pageNo",  //当前页  
+	            total: "pageInfo.totalPages",//总页数  
+	            records:"pageInfo.total", //查询出的记录数  
+	            rowNum:"pageInfo.pageSize",
+	            repeatitems : false  
+	       	 },
+	       	loadComplete: function (xhr) {
+	       		$("#goodsId").empty();
+	       		getGoodsName();
+	       	}
+		});
+		/* $("#table").setSelection(4,true); */
+		/* $("#table").jqGrid("navGrid","#pager_list_1",{del:true,search:true},{height:200,reloadAfterSubmit:true}); */
+		$(window).bind("resize",function(){
+			var width=$(".jqGrid_wrapper").width();
+		    $("#table").setGridWidth(width)});
+		
+		getCatInfo(0,"#goodsCateId");
+		
+		});
+        //判断是否是火狐浏览器
+        function isFirefox(){
+        	if (navigator.userAgent.indexOf("Firefox") > -1)
+        	     return true;
+        	else
+        	   return false;
+       }
+        function nofind(){ 
+      	  var img=event.srcElement; 
+      	  img.src="../hplus/img/onerror.jpg"; 
+      	  img.onerror=null; //控制不要一直跳动 
+      	} 
+      //自定义报警列格式onmousemove="showBigPic(this.src)" onmouseout="closeimg()"
+        function alarmFormatter(cellvalue, options, rowdata){
+    	  if(isFirefox()){
+            if (cellvalue != null)
+                return '<img width="70" height="45"  src="'+cellvalue+'"    onerror="nofind()" />';
+            else 
+                return '<img width="70" height="45" src="../hplus/img/no.png"    />';
+    	  }else{
+    		  if (cellvalue != null)
+	              return '<div><img width="70" height="45"   onmousemove="showBigPic(this.src)"  onmouseout="closeimg()"  src="'+cellvalue+'" onerror="nofind()"  /></div>';
+	          else 
+	              return '<div><img width="70" height="45" src="../hplus/img/no.png"    /></div>';
+    	  }
+    	  
+        }
+        function showBigPic(filepath) {
+
+        	//将文件路径传给img大图
+            document.getElementById('pre_view').src = filepath;
+            //获取大图div是否存在
+            var div = document.getElementById("bigPic");
+            if (!div) {
+                return;
+            }
+            //如果存在则展示
+            document.getElementById("bigPic").style.display="block";
+            //获取鼠标坐标
+            var e = event || window.event;
+           	var scrollX = document.documentElement.scrollLeft || document.body.scrollLeft;
+           	var scrollY = document.documentElement.scrollTop || document.body.scrollTop;
+          	var intX = e.pageX || e.clientX + scrollX;
+           	var intY = e.pageY || e.clientY + scrollY;
+            //var intX = window.event.clientX;
+            //var intY = window.event.clientY;
+            //设置大图左上角起点位置
+            div.style.left = intX +10+ "px";
+            div.style.top = intY - 150+"px";
+        }
+        
+        function closeimg(){
+            document.getElementById("bigPic").style.display="none";
+        }
+        
+        var edit=function(){
+        	$("#eg").addClass("no-padding");
+		    $(".click2edit").summernote({lang:"zh-CN",focus:true })};
+		var save=function(){$("#eg").removeClass("no-padding");
+	   var aHTML=$(".click2edit").code();$(".click2edit").destroy()};
+	   
+	   
+		 //查询
+		 
+	        $("#search-btn").click(function(){ 
+	            var value = escape($("#value").val()); 
+	            var isAdminRecom = escape($("#isAdminRecom").val()); 
+	            var isSale=escape($("#isSale").val());
+	            var goodsCateId=escape($("#goodsCateId").val());
+	            var goodsId=escape($("#goodsId").val());
+	            $("#table").jqGrid('setGridParam',{ 
+	                url:_goodsList, 
+	                postData:{'value':value,'isAdminRecom':isAdminRecom,"isSale":isSale,"goodsCateId":goodsCateId,"goodsId":goodsId}, //发送数据 
+	                page:1 
+	            }).trigger("reloadGrid"); //重新载入 
+	          
+	        });
+	        $("#search-clear").click(function(){ 
+	        	/* var page = $('#table').getGridParam('page'); // current page
+	            var rows = $('#table').getGridParam('rows'); // rows  
+	            //var sidx = $('#table').getGridParam('sidx'); // sidx
+	            var sord = $('#table').getGridParam('sord'); // sord
+	            $("#value").val('');
+	            $("#isAdminRecom").val('');
+	            $("#isSale").val('');
+	            $("#goodsCateId").val('');
+	            $("#goodsId").val('')
+	            /*  $("#goodsId").trigger("liszt:updated");
+	            $("#secGroupOwner").chosen(); */ 
+	       /*      $("#table").jqGrid('setGridParam',{ 
+	                url:_goodsList,
+	                postData:{'page':page,'rows':rows,'sord':sord}, //发送数据 
+	                page:page
+	            }).trigger("reloadGrid");  *///重新载入 */ 
+	           
+	            location.reload();
+	        });
+	   
+		//修改状态setIsSale  上架下架
+		function setIsSale(a){
+			var num=$(a).data("status");
+			var isSale;
+			if(num==0){
+				isSale=1;
+			}else{
+				isSale=0;
+			}
+			var id=$(a).data("id");
+			var dataParam={"id":id,"isSale":isSale};
+			$.ajax({ 
+				url:_editGoodsIsSale, 
+				data:dataParam, 
+				type: "post",
+		        dataType: "json",
+		        async: 'false',
+		        success: function (data) {
+		           if(data.status=="200"){
+		        	   var span=$(a).find("span");
+		        	   if(num==0){
+		        		   $(a).data("status",1);
+		        		   $(span).attr("class","label label-primary");
+		        		   $(span).attr("title","上架");
+		        		   $(span).html("上架");
+		        	   }else{
+		        		   $(a).data("status",0);
+		        		   $(span).attr("class","label label-danger");
+		        		   $(span).attr("title","下架");
+		        		   $(span).html("下架");
+		        	   }
+		           }else{
+		        	   layer.msg("操作失败!");
+		           }
+		          }});
+		}//修改是否推荐
+		function setIsAdminRecom(a){
+			var num=$(a).data("status");
+			var isAdminRecom;
+			if(num==0){
+				isAdminRecom=1;
+			}else{
+				isAdminRecom=0;
+			}
+			var id=$(a).data("id");
+			var dataParam={"id":id,"isAdminRecom":isAdminRecom};
+			$.ajax({ 
+				url:_editGoodsIsAdminRecom, 
+				data:dataParam, 
+				type: "post",
+		        dataType: "json",
+		        async: 'false',
+		        success: function (data) {
+		           if(data.status=="200"){
+		        	   var span=$(a).find("span");
+		        	   if(num==0){
+		        		   $(a).data("status",1);
+		        		   $(span).attr("class","label label-primary");
+		        		   $(span).attr("title","是");
+		        		   $(span).html("是");
+		        	   }else{
+		        		   $(a).data("status",0);
+		        		   $(span).attr("class","label label-danger");
+		        		   $(span).attr("title","否");
+		        		   $(span).html("否");
+		        	   }
+		           }else{
+		        	   layer.msg("操作失败!");
+		           }
+		          }});
+		}
+		//删除
+		function del(a){
+	    	var id=$(a).data("id");
+	    	layer.confirm('确定要删除此记录吗？', function(){ 
+	    		layer.closeAll('dialog');
+	    		$.ajax({ url: _delGoods, data:{id:id}, success: function(data){
+	    	          layer.msg(data.message);
+	    	          $("#table").trigger("reloadGrid");
+	    	           }
+	    	          });
+	    		}); 
+	    }
+		//获取商品名称
+		function getGoodsName(){
+		
+			var str="";
+	        var obj = document.getElementById("goodsId");
+			$.ajax({
+			type:"post",
+			async:false,
+			url:_goodsList,
+			success:function(data){
+				
+				if(data.status="200"&&data.data!=null){
+						var option =new  Option('请选择商品', "");
+						 obj.add(option);
+					$.each(data.data, function (index, e) {
+						
+	                    obj.add(new Option(e.goodsName, e.id));
+	                });
+	                $("#goodsId").trigger("chosen:updated");
+	                $("#goodsId").chosen();
+			    
+				}
+			
+			  }
+			})
+			
+		}
+		 /* $(".chosen-select").chosen({   
+		     search_contains: true
+		 });
+		 */
+		//获取分类
+		function getCatInfo(id,_$id){
+			var url=_getGoodsCatePageById;
+			$.ajax({ 
+				  type:"POST", 
+				  url:url,
+				  dataType:"json",
+				  async:false,
+				  success:function(data){ 
+					  if(data.status=="200"){//goodsCateId
+						  var opthtml='<option value="">选择分类</option>';
+						      
+							  var parent=data.data;
+							  for(var i=0;i<parent.length;i++){
+								 
+									  opthtml+='<option value="'+parent[i].id+'">'+parent[i].catName+'</option>';
+							
+							  }
+							  $(_$id).html(opthtml);
+							  
+								
+					  }
+				  }
+			})
+		}
+	
+    </script>
+    <script src="../hplus/js/plugins/chosen/chosen.jquery.js"></script>
+   <script src="../hplus/js/plugins/jsKnob/jquery.knob.js"></script>
+   <script src="../hplus/js/plugins/jasny/jasny-bootstrap.min.js"></script>
+    <script src="../hplus/js/plugins/datapicker/bootstrap-datepicker.js"></script>
+    <script src="../hplus/js/plugins/prettyfile/bootstrap-prettyfile.js"></script>
+    <script src="../hplus/js/plugins/nouslider/jquery.nouislider.min.js"></script>
+    <script src="../hplus/js/plugins/switchery/switchery.js"></script>
+    <script src="../hplus/js/plugins/ionRangeSlider/ion.rangeSlider.min.js"></script>
+    <script src="../hplus/js/plugins/iCheck/icheck.min.js"></script>
+    <script src="../hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+    <script src="../hplus/js/plugins/colorpicker/bootstrap-colorpicker.min.js"></script>
+    <script src="../hplus/js/plugins/clockpicker/clockpicker.js"></script>
+    <script src="../hplus/js/plugins/cropper/cropper.min.js"></script>
+    <script src="../hplus/js/demo/form-advanced-demo.min.js"></script>
+<!-- <script src="../amaze/js/amazeui.chosen.min.js"></script> -->
+<!--  <script src="../amaze/chosen/docsupport/jquery-3.2.1.min.js" type="text/javascript"></script> -->
+</body>
+</html>

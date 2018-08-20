@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="renderer" content="webkit|ie-comp|ie-stand">
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+<title>后台管理</title>
+<link rel="shortcut icon" href="/favicon.ico">
+<link href="../hplus/css/bootstrap.min14ed.css?v=3.3.6" rel="stylesheet">
+<link href="../hplus/css/font-awesome.min93e3.css?v=4.4.0"	rel="stylesheet">
+<link href="../hplus/css/animate.min.css" rel="stylesheet">
+<link href="../hplus/css/style.min862f.css?v=4.1.0" rel="stylesheet">
+<link href="../hplus/css/plugins/jqgrid/ui.jqgridffe4.css?0820" rel="stylesheet">
+<link rel="stylesheet" href="../css/common.css">
+ 
+	
+    
+   
+    
+
+<script src="../hplus/js/jquery.min.js?v=2.1.4"></script>
+<style>
+	select optgroup {
+		color: #777;
+		font-weight: 100;
+		font-size: 13px;
+	}
+
+	select optgroup option {
+		color: #000;
+		font-size: 14px;
+	}
+	#specbutton{
+	position: relative;
+     top: -17px;
+	}
+	
+</style>
+</head>
+<body class="fixed-sidebar full-height-layout gray-bg fixed-nav" style="overflow-x: hidden;">
+	<!-- <div id="top-alert" class="alert alert-danger alert-dismissable">
+		<button aria-hidden="true" class="close" type="button">×</button>
+		<span class="alert-content"></span>
+	</div> -->
+	<div style="padding: 10px;">
+		<div class="row">
+			<div class="col-sm-12">
+				<div class="ibox float-e-margins">
+				<div class="ibox-content" id="specClose">
+                        <div class="modal inmodal" id="myModal15" tabindex="-1" role="dialog" aria-hidden="true">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content ">
+                                      <div class="modal-header" style="padding: 8px 10px;">
+                                          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">关闭</span>
+                                         </button>
+                                          <h4 class="modal-title">规格信息</h4>
+                                      </div>
+		                                  <div class="modal-body" id="GoodsSpec">
+		                                     
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-white" data-dismiss="modal">关闭</button>
+                                            <button type="button" class="btn btn-warning " id="btnReset">重置</button>
+                                            <button type="button" class="btn btn-primary" id="btnSpec">确定</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                    </div>
+					<div class="ibox-content" style="margin-top: -25px">
+						<form method="post" action="/goods/operGoodsInfo" class="form-horizontal" ><!-- onsubmit="return toVaild()" -->
+							<input type="hidden" name="id" id="goodsId" value=""> 
+							<input type="hidden" name="oper" id="oper" value="add">
+							<div class="tabs-container">
+								<ul class="nav nav-tabs">
+									<li class="active"><a data-toggle="tab" href="#tab-1" aria-expanded="true">基本信息</a></li>
+									<li class=""><a data-toggle="tab" href="#tab-4"	aria-expanded="false">商品图片</a></li>
+									<!--<li class=""><a data-toggle="tab" href="#tab-5" aria-expanded="false">商品模型</a></li>-->
+									<li class=""><a data-toggle="tab" href="#tab-3"	aria-expanded="false">商品规格</a></li>
+									<li class=""><a data-toggle="tab" href="#tab-2"	aria-expanded="false">详细介绍</a></li>
+								</ul>
+								<div class="tab-content">
+									<div id="tab-1" class="tab-pane active">
+										<div class="panel-body">
+										   <div class="form-group">
+												<label class="col-sm-2 control-label">商品编号<span class="text-danger">*</span></label>
+												<div class="col-sm-6">
+													<input type="text"   class="form-control" name="goodsNo" id="goodsNo"  	 placeholder="商品编号，唯一" value="">
+												    
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">名称<span	class="text-danger">*</span></label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" maxlength="100" name="goodsName" id=goodsName  placeholder="输入100字以内" 	 value="">
+												</div>
+											</div>
+											
+											<div class="form-group">
+												<label class="col-sm-2 control-label">分类<span class="text-danger">*</span></label>
+												<div class="col-sm-6">
+
+													<select name="goodsCateId" id="goodsCateId" class="form-control">
+														
+													</select>
+												</div>
+											</div>
+                                         
+											<!-- <div class="form-group">
+												<label class="col-sm-2 control-label">规格<span class="text-danger">*</span></label>
+												<div class="col-sm-6">
+													<input type="text" class="form-control" name="goodsSpec"  placeholder="商品规格"	id="goodsSpec" value="">
+												</div>
+											</div> -->
+											  <div class="form-group">
+												<label class="col-sm-2 control-label">商品简介<span class="text-danger">*</span></label>
+												<div class="col-sm-6">
+												<textarea class="form-control" maxlength="200"  name="goodsDesc" id="goodsDesc" rows="3" cols="20"  placeholder="输入200字以内"></textarea>
+													<!-- <input type="text" class="form-control" name="goodsDesc"	value=""> -->
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">推荐</label>
+												<div class="col-sm-6">
+													<label class="cr-inline">
+													   <input type="radio" value="1" name="isAdminRecom">是&nbsp;&nbsp;</label>
+												    <label class="cr-inline"> 
+												       <input type="radio" value="0" name="isAdminRecom">否 	</label>
+												</div>
+											</div>
+
+											<div class="form-group">
+												<label class="col-sm-2 control-label">状态</label>
+												<div class="col-sm-6">
+													<label class="cr-inline"> 
+													   <input type="radio"	value="1" name="isSale">上架&nbsp;&nbsp;
+													</label> 
+													<label class="cr-inline"> 
+													   <input type="radio"	value="0" name="isSale">下架&nbsp;&nbsp;
+													</label>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="tab-4" class="tab-pane">
+										<div class="panel-body">
+											<div class="form-group">
+												<label class="col-sm-2 control-label">封面图
+												<span class="text-danger">*</span></label>
+												<div class="col-sm-6">
+<link rel="stylesheet"	href="../hplus/jqueryFileUpload/style.css">
+<script src="../hplus/jqueryFileUpload/jquery.ui.widget.js"></script>
+<script	src="../hplus/jqueryFileUpload/jquery.iframe-transport.js"></script>
+<script	src="../hplus/jqueryFileUpload/jquery.fileupload.js"></script>
+													<div>
+														<a href="javascript:;"	class="btn btn-primary btn-sm jqfivefile" type="button">
+															<span id="imgUpload_name_img">上传</span>
+															<span id="progress_img"></span> 
+															<input id="imgUpload_img" type="file" name="file" title="上传图片" accept="image/*"   data-url="/goods/uploadImg" />
+														</a>
+														<div id="imgsbox_img" class="imgsbox"></div>
+													</div>
+													<script>
+														$(function() {
+															var multi = 0;
+															var name = "goodsCoverImg";
+															if (multi) {
+																name = name	+ '[]';
+																$("#imgUpload_img").attr('multiple','multiple');
+															} else {
+																$("#imgUpload_img").removeAttr('multiple');
+															}
+															$("#imgUpload_img").fileupload({
+																	       dataType : 'json',
+																		   done : function(e,data) {
+																			if (data.result && data.result.status == "200") {
+																				var img = '<div class="imgbox">';
+																					img += '<div class="removePic" onclick="removePic(this,\'/goods/deleteFile\')">×</div>';
+																					img += '<input type="hidden" name="'+name+'" value="' + data.result.data + '">';
+																					img += '<img src="' + data.result.data + '">';
+																					img += '</div>';
+																						if (multi) {
+																							$("#imgsbox_img").append(img);
+																						} else {
+																							$("#imgsbox_img").html(img);
+																						}
+																					} else {
+																						layer.msg(data.result.message);
+																					}
+																				},
+																				change : function(e,data) {
+																					$("#imgUpload_name_img").html('上传图片...');
+																				},
+																				progressall : function(e,data) {
+																					var progressnum = parseInt(data.loaded / data.total * 100);
+																					if (progressnum == 100) {
+																						$("#progress_img").text('');
+																						$("#imgUpload_name_img").html('上传图片');
+																					} else {
+																						$("#progress_img").text(progressnum + "%");
+																					}
+																				},
+																				error : function(e,data) {
+																					layer.msg('上传请求失败');
+																				}
+																			});
+														});
+
+														/**
+														 * 移除图片
+														 */
+														function removePic(	_self,deleteurl) {
+															$(_self).parent().remove();
+															if (deleteurl) {
+																$.post(deleteurl,{
+																	path:$(_self).parent().find('img').attr('src')
+																	});
+															}
+														}
+													</script>
+													<span class="help-block m-b-none text-danger">支持:jpg、jpeg、png、gif;大小：限5M内超过上传失败，</span>
+												</div>
+											</div>
+											<div class="form-group">
+												<label class="col-sm-2 control-label">相册<span
+													class="text-danger">*</span></label>
+												<div class="col-sm-10">
+													<link rel="stylesheet"	href="../hplus/jqueryFileUpload/style.css">
+													<script src="../hplus/jqueryFileUpload/jquery.ui.widget.js"></script>
+													<script	src="../hplus/jqueryFileUpload/jquery.iframe-transport.js"></script>
+													<script	src="../hplus/jqueryFileUpload/jquery.fileupload.js"></script>
+													<div>
+													<a href="javascript:;"	class="btn btn-primary btn-sm jqfivefile" type="button">
+															<span id="imgUpload_name_imgs">上传图片</span>
+															<span id="progress_imgs"></span> 
+															<input id="imgUpload_imgs" name="file"	type="file" title="上传图片" accept="image/*"	data-url="/goods/uploadImg" />
+														</a>
+														<div id="imgsbox_imgs" class="imgsbox"></div>
+													<!-- 	<input type="hidden" id="goodsCoverImgs" type="hidden" name="goodsCoverImgs[]" value="">'; -->
+													</div>
+													
+													<script>
+														$(function() {
+															var multi = 1;
+															var name = "goodsCoverImg";
+															if (multi) {
+																name = name+"s";
+																$("#imgUpload_imgs").attr('multiple','multiple');
+															} else {
+																$("#imgUpload_imgs").removeAttr('multiple');
+															}
+															$("#imgUpload_imgs").fileupload({
+																dataType : 'json',done : function(e,data) {
+																					if (data.result&& data.result.status == "200") {
+																						var img = '<div class="imgbox">';
+																						img += '<div class="removePic" onclick="removePic(this,\'/goods/deleteFile\')">×</div>';
+																						img += '<input type="hidden" name="'+name+'" value="' + data.result.data + '">';
+																						img += '<img src="' + data.result.data + '">';
+																						img += '</div>';
+																						if (multi) {
+																							$("#imgsbox_imgs").append(img);
+																						} else {
+																							$("#imgsbox_imgs").html(img);
+																						}
+																					} else {
+																						layer.msg(data.result.message);
+																					}
+																				},
+																				change : function(e,data) {
+																					$("#imgUpload_name_imgs").html('上传图片...');
+																				},
+																				progressall : function(e,data) {
+																					var progressnum = parseInt(data.loaded / data.total * 100);
+																					if (progressnum == 100) {
+																						$("#progress_imgs").text('');
+																						$("#imgUpload_name_imgs").html('上传图片');
+																					} else {
+																						$("#progress_imgs").text(progressnum+ "%");
+																					}
+																				},
+																				error : function(e,data) {
+																					layer.msg('上传请求失败');
+																				}
+																			});
+														});
+
+														/**
+														 * 移除图片
+														 */
+														function removePic(	_self,deleteurl) {
+															$(_self).parent().remove();
+															if (deleteurl) {
+																$.post(deleteurl,{
+																		path : $(_self).parent().find('img').attr('src')});
+															}
+														}
+													</script>
+													
+													<span class="help-block m-b-none text-danger">支持:jpg、jpeg、png、gif；大小：限5M内</span>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div id="tab-2" class="tab-pane">
+										<div class="panel-body">
+										<textarea name="goodsContent" id="deitor"></textarea>
+										<script type="text/javascript" charset="utf-8" src="../ueditor/ueditor.config.js"></script>
+										<script type="text/javascript" charset="utf-8" src="../ueditor/ueditor.all.js"></script>
+										<script type="text/javascript" charset="utf-8" src="../ueditor/lang/zh-cn/zh-cn.js"></script>
+										<script type="text/javascript">
+										var ue = UE.getEditor('deitor');
+										</script>
+									  
+										</div>
+									</div>
+					
+									<div id="tab-3" class="tab-pane">
+										<div class="panel-body">
+											<div class="form-group">
+												<div id="specbutton"> <input type="button" onclick="getGoodsSpecList()" name="checkSpec"  class="btn btn-w-m btn-info" data-toggle="modal" data-target="#myModal15" value="选择规格"  />
+												<!-- onclick="getGoodsSpecList()" <input type="button"  class="btn btn-w-m btn-primary" value="增加一行" id="addID"/> -->
+												</div>
+												<div ><!-- class="col-sm-8" id="product" -->
+													<table class="table table-bordered text-center"
+														id="spec_input_tab">
+														<tr> 
+														    <th class="text-center">货号</th>
+														    <th class="text-center">规格<span class="text-danger">*</span></th>
+															<th class="text-center">市场价格<span class="text-danger">*</span></th>
+															<th class="text-center">店铺价格<span class="text-danger">*</span></th>
+															<th class="text-center">销售量<span class="text-danger">*</span></th>
+															<th class="text-center">库存<span class="text-danger">*</span></th>
+															<th class="text-center">操作<span class="text-danger">*</span></th>
+														</tr>
+														
+													</table>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="hr-line-dashed"></div>
+							<div class="form-group">
+								<div class="col-sm-4 col-sm-offset-2">
+									<button class="btn btn-primary ajax-post" target-form="form-horizontal" type="submit">确 定</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+
+	<script src="../hplus/js/bootstrap.min.js?v=3.3.6"></script>
+	<script src="../hplus/js/plugins/metisMenu/jquery.metisMenu.js"></script>
+	<script src="../hplus/js/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="../layer-v3.1.1/layer/layer.js"></script>
+	<!--<script src="../hplus/js/plugins/layer/layer.min.js"></script>-->
+	<script src="../hplus/js/hplus.min.js?v=4.1.0"></script>
+	<script src="../hplus/js/contabs.min.js"></script>
+	<script src="../hplus/js/plugins/pace/pace.min.js"></script>
+
+ 
+    <script src="../hplus/js/content.min.js?v=1.0.0"></script>
+	<!-- jqGrid -->
+	<script
+		src="../hplus/js/plugins/jqgrid/i18n/grid.locale-cnffe4.js?0820"></script>
+	<script src="../hplus/js/plugins/jqgrid/jquery.jqGrid.minffe4.js?0820"></script>
+	<!--<script src="../hplus/js/plugins/iCheck/icheck.min.js"></script>-->
+	<script src="../js/common2.js"></script>
+	<script  src="../js/pathjs.js"></script>
+
+	<script>
+		var goodsId = "0";
+		$(document).ready(function() {
+			var id= getUrlParam("id");
+			if(id!=null){
+			$("#oper").val("edit");
+			$("#goodsId").val(id);
+			$("#goodsNo").attr("disabled","disabled");
+			 getGoodsInfoByGoodsId(id);
+			
+			}else{
+				 formSetValue("isSale", "1");
+				 formSetValue("isAdminRecom", "1");
+				$("#oper").val("add");
+				getCatInfo(0,"#goodsCateId");
+			}
+			//getGoodsSpecList();
+		});
+	
+		//获取分类
+		function getCatInfo(id,_$id){
+			var url=_getGoodsCatePageById;
+			$.ajax({ 
+				  type:"POST", 
+				  url:url,
+				  dataType:"json",
+				  async:false,
+				  success:function(data){ 
+					  if(data.status=="200"){//goodsCateId
+						  var opthtml='<option value="0">顶级分类</option>'
+						 
+							  var parent=data.data;
+							  for(var i=0;i<parent.length;i++){
+								  if(id!=null&&id==parent[i].id){
+								     opthtml+='<option selected="selected" value="'+parent[i].id+'">'+parent[i].catName+'</option>';  
+								  }else{
+									  opthtml+='<option value="'+parent[i].id+'">'+parent[i].catName+'</option>';
+								  }
+							  }
+							  $(_$id).html(opthtml);
+							  
+								
+					  }
+				  }
+			})
+		}
+		
+		
+		
+		//根据id获取商品信息
+		function getGoodsInfoByGoodsId(id){
+			$.ajax({ 
+				  type:"POST", 
+				  url:_getGoodsInfoById+"?goodsId="+id,
+				  dataType:"json",
+				  async:false,
+				  success:function(data){ 
+				    if(data.status=="200"){
+				    
+				    	$("#goodsNo").val(data.data.goodsNo);
+				    	$("#goodsName").val(data.data.goodsName);
+				    	/* $("#marketPrice").val(data.data.marketPrice);
+				    	$("#saleCount").val(data.data.saleCount);
+				    	$("#shopPrice").val(data.data.shopPrice); */
+				    	$("#goodsDesc").val(data.data.goodsDesc);
+				    /* 	$("#goodsSpec").val(data.data.goodsSpec); */
+				    	/* $("#goodsStock").val(data.data.goodsStock); */
+				    	var isAdminRecom=data.data.isAdminRecom;//推荐
+				    	
+				    	if(isAdminRecom){
+				    		document.getElementsByName('isAdminRecom')[0].checked='checked';
+				    	}else{
+				    		document.getElementsByName('isAdminRecom')[1].checked='checked';
+				    	}
+				    	                 
+				    	var  isSale=data.data.isSale;//状态
+				    	if(isSale){
+				    		document.getElementsByName('isSale')[0].checked='checked';
+				    	}else{
+				    		document.getElementsByName('isSale')[1].checked='checked';
+				    	}
+				    	var goodsContent=data.data.goodsContent;
+				    	if(goodsContent!=null){
+				    		$("#deitor").val(goodsContent);
+				    		
+				    	}
+				    	
+				    	
+				    	
+				    	if(data.data.goodsCoverImg!=null){
+						var name = "goodsCoverImg";
+							$("#imgUpload_img").attr('multiple','multiple');
+						var img = '<div class="imgbox">';
+							img += '<div class="removePic" onclick="removePic(this,\'/goods/deleteFile\')">×</div>';
+							img += '<input type="hidden" name="'+name+'" value="' + data.data.goodsCoverImg + '">';
+							img += '<img src="' + data.data.goodsCoverImg + ' "  onerror="nofind()">';
+							img += '</div>';
+						    $("#imgsbox_img").append(img);
+				    	}
+						if(data.data.potos!=null){
+							var potoList=data.data.potos;
+							for(var i=0;i<potoList.length;i++){
+								var name = "goodsCoverImsgs";
+								$("#imgUpload_imgs").attr('multiple','multiple');
+							var img = '<div class="imgbox">';
+								img += '<div class="removePic" onclick="removePic(this,\'/goods/deleteFile\')">×</div>';
+								img += '<input type="hidden" name="'+name+'" value="' + potoList[i].goodsImg + '">';
+								img += '<img src="' + potoList[i].goodsImg + '" onerror="nofind()">';
+								img += '</div>';
+							    $("#imgsbox_imgs").append(img);
+							}
+						}
+						 getCatInfo(data.data.goodsCateId,"#goodsCateId");
+						 
+						 if(data.data.skuInfo!=null){
+							 clearTrBox();
+							 var skuList=data.data.skuInfo;
+							 var html="";
+							  html+=setInputGoodsInfoTableHtml();
+							 for(var i=0;i<skuList.length;i++){
+							    html+=setInputGoodsInfoSkuHtml(skuList[i].productNo,skuList[i].productSpec,skuList[i].marketPrice,
+							    		skuList[i].shopPrice,skuList[i].saleCount,skuList[i].goodsStock);
+							    }
+							    $("#spec_input_tab").append(html);
+						 }
+						 
+						    
+				    }
+				    }, 
+					  error:function(){ 
+							layer.msg(data.message);
+						  } 
+				 
+				});
+		}
+		function nofind(){ 
+		   	  var img=event.srcElement; 
+		   	  img.src="../hplus/img/onerror.jpg"; 
+		   	  img.onerror=null; //控制不要一直跳动 
+		   	} 
+		//获取规格信息
+		function getGoodsSpecList(){
+			clearCheckBox();
+			$.ajax({ 
+				  type:"POST", 
+				  url:_getGoodsSkuAllList,
+				  dataType:"json",
+				  async:false,
+				  success:function(data){ 
+				    if(data.status=="200"){
+				    	var html='';
+				    	var skuList=data.data;
+				    	for(var i=0;i<skuList.length;i++){
+				    		var attrName=skuList[i].attrName;
+				    		 html+='<div id="find'+i+'" class="form-group">';
+				    		 html+='<label class="col-sm-2 control-label">'+attrName+'</label>';
+				    	     html+='<input type="hidden" name="attrVlues"  value="'+skuList[i].id+'" >' ;
+				    		var attrValues=skuList[i].skuValue;
+				    		for(var j=0;j<attrValues.length;j++){
+				    			html+='<p class="checkbox checkbox-inline" style="margin-left:-20px;width: 80px;">';
+				    			html+='<input type="checkbox" name="'+attrName+'" id="'+attrName+j+'" style="margin-top: 2px;margin-left: 6px" value="'+attrValues[j].attrValue+'">';
+				    		    html+='&nbsp;<label for="'+attrName+j+'">'+attrValues[j].attrValue+'</label>';
+				    		    html+=' </p>';
+				    		 }
+				    		html+=' </div>';
+				    	}
+				    	$("#GoodsSpec").append(html);
+				    }
+				  }, 
+				  error:function(){ 
+							layer.msg(data.message);
+				   } 
+				 
+			});
+		}
+		//获取checkbox 值
+		$("#btnSpec").click(function(){
+			  
+			 clearTrBox();
+			 var len= $("#GoodsSpec").children('div').length;
+			 var array =new Array();
+			 
+			  for(var i=0;i<len;i++){
+				  var divId="#find"+i+" input:checkbox";
+				  var str=[];
+				  $(divId).each(function () {
+		               if ($(this).is(':checked')) {
+		            	   str.push($(this).val());
+		               }
+		           });
+				  if(str.length>0){
+				  array.push(str);
+				  }
+			  }
+		        var html="";
+		     	html+=setInputGoodsInfoTableHtml();
+			   if(array.length>1){
+			     var skuArray=  doExchange(array);
+				  for(var j=0;j<skuArray.length;j++){
+					  html+=setInputGoodsInfoSkuHtml("",skuArray[j],1,1,1,1)
+				      } 
+			  }else{
+					  for(var j=0;j<array.length;j++){
+						  var childArray=array[j];
+						   for(var k=0;k<childArray.length;k++){
+							  // console.log();
+							   html+=setInputGoodsInfoSkuHtml("",childArray[k],1,1,1,1)
+						   } 
+						 
+					   } 
+			  }
+		   $("#spec_input_tab").append(html);
+	        //关闭当前窗口 */
+			 $('#myModal15').modal('hide');
+	         
+		});
+		function setInputGoodsInfoTableHtml(){
+			var html="";
+			html+='<tr> <th class="text-center">货号</th>';
+			html+=' <th class="text-center">规格SKU<span class="text-danger">*</span></th>';
+			html+='<th class="text-center">市场价格<span class="text-danger">*</span></th>';
+			html+='<th class="text-center">店铺价格<span class="text-danger">*</span></th>';
+			html+='<th class="text-center">销售量<span class="text-danger">*</span></th>';
+			html+='<th class="text-center">库存<span class="text-danger">*</span></th>';
+			html+='<th class="text-center">操作<span class="text-danger">*</span></th></tr>';
+			return html;
+		}
+		function setInputGoodsInfoSkuHtml(productNo,productSpec,marketPrice,shopPrice,saleCount,goodsStock){
+			
+			var  html='<tr>';
+			  html+='  <td><input type="text" name="productNos"  placeholder="商品货号"  value="'+productNo+'" class="form-control"></td>';
+			  html+='  <td><input type="text" name="productSpecs"  value="'+productSpec+'"  class="form-control"></td>';
+		      html+='  <td><input type="text" name="marketPrices"  onkeyup="clearNoNum(this)" onpaste="clearNoNum(this)"  value="'+marketPrice+'" class="form-control"></td>';
+			  html+='  <td><input type="text" name="shopPrices" 	onkeyup="clearNoNum(this)" onpaste="clearNoNum(this)"	  value="'+shopPrice+'" class="form-control"></td>';
+			  html+='  <td><input type="text" name="saleCounts" 	onkeyup="clearNoNum(this)" onpaste="clearNoNum(this)"	  value="'+saleCount+'" class="form-control"></td>';
+			  html+='  <td><input type="text" name="goodsStocks" 	onkeyup="clearNoNum(this)" onpaste="clearNoNum(this)" value="'+goodsStock+'" class="form-control"></td>';
+			  html+='  <td><input type="button" name="delete"  value="删 除"  class="btn btn-warning "  onclick="deleteSelectedRow(this)"></td>';
+			  html+='  </tr>';
+			  return html;
+		}
+		//重置checkbox
+		$("#btnReset").click(function(){
+			$('#GoodsSpec input:checkbox').removeAttr('checked');
+		});
+		function clearCheckBox(){//清除slides下的所有div和img
+			var div = document.getElementById("GoodsSpec");
+		
+			while(div.hasChildNodes()) //当div下还存在子节点时 循环继续
+		    {
+		        div.removeChild(div.firstChild);
+		       
+		    }
+		}
+		function clearTrBox(){//清除slides下的所有div和img
+			var div2=document.getElementById("spec_input_tab");
+			while(div2.hasChildNodes()) //当div下还存在子节点时 循环继续
+		    {
+		      
+		        div2.removeChild(div2.firstChild);
+		    }
+		}
+		//删除单元格
+		function deleteSelectedRow(obj){
+		var tr=obj.parentNode.parentNode;
+		tr.parentNode.removeChild(tr);
+		}
+		
+		
+		// 执行组合排列的函数
+	    function doExchange(arr){
+	        var len = arr.length;
+	        // 当数组大于等于2个的时候
+	        if(len >= 2){
+	            // 第一个数组的长度
+	            var len1 = arr[0].length;
+	            // 第二个数组的长度
+	            var len2 = arr[1].length;
+	            // 2个数组产生的组合数
+	            var lenBoth = len1 * len2;
+	            //  申明一个新数组,做数据暂存
+	            var items = new Array(lenBoth);
+	            // 申明新数组的索引
+	            var index = 0;
+	            // 2层嵌套循环,将组合放到新数组中
+	            for(var i=0; i<len1; i++){
+	                for(var j=0; j<len2; j++){
+	                    items[index] = arr[0][i] +","+ arr[1][j];
+	                    index++;
+	                }
+	            }
+	            // 将新组合的数组并到原数组中
+	            var newArr = new Array(len -1);
+	            for(var i=2;i<arr.length;i++){
+	                newArr[i-1] = arr[i];
+	            }
+	            newArr[0] = items;
+	            // 执行回调
+	            return doExchange(newArr);
+	        }else{
+	            return arr[0];
+	        }
+	    }
+
+	    //执行
+	 /*    var array = [['a', 'b', 'c'], [1, 2, 3], ['x', 'y', 'z']];
+	    var arr1 = [['a','b','c']]; */
+
+	    /* console.log(doExchange(array));
+		 */
+		
+		/* //表单验证
+		function toVaild(){
+			var goodsNo=$("#goodsNo").val();
+			if(goodsNo==null){
+				layer.alert("商品编为空！");
+				return false;
+			}
+			var goodsName=$("#goodsName").val();
+			if(godosName==null){
+				layer.alert("商品名称不能为空！");
+				return false;
+			}
+	    	var goodsDesc=$("#goodsDesc").val();
+	    	if(goodsDesc==null){
+	    	  layer.alert("商品简介不能为空！");
+	    	  return false;
+	    	}
+	    	var deitor=$("#deitor").val();
+	    	if(deitor==null){
+	    		layer.alert("商品详情不能为空！");
+		    	return false;
+	    	}
+	    	return true;
+		 }
+ */
+		$('#mid').change(function() {
+			var id = $(this).val();
+			if (id == 0) {
+				$('#props').html('');
+			} else {
+				getAttr(id, goodsId);
+			}
+		});
+
+		function getAttr(id, goodsId) {
+			var url = "/admin/goods/props.html";
+			$.post(url, {
+				id : id,
+				goodsId : goodsId
+			}, function(data) {
+				$('#props').html(data.props);
+			});
+		}
+	</script>
+
+</body>
+</html>
